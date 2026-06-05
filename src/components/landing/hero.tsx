@@ -45,7 +45,7 @@ export function Hero() {
           transition={{ duration: 0.6, delay: 0.3 }}
           className="mt-10 flex flex-wrap justify-center gap-4"
         >
-          <Link to="/signup" className="group inline-flex items-center gap-2 rounded-full gradient-primary px-6 py-3 text-sm font-semibold text-white ring-2 ring-accent-purple/30 transition-all hover:scale-[1.03] glow-purple">
+          <Link to="/auth" className="group inline-flex items-center gap-2 rounded-full gradient-primary px-6 py-3 text-sm font-semibold text-white ring-2 ring-accent-purple/30 transition-all hover:scale-[1.03] glow-purple">
             Get Started Free
             <span className="size-1.5 rounded-full bg-white/60 transition-all group-hover:bg-white group-hover:w-3" />
           </Link>

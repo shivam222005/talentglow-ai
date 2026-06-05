@@ -201,7 +201,7 @@ function AuthPage() {
           </div>
 
           <div className="text-center text-[11px] text-[oklch(0.55_0.02_260)]">
-            © 2026 DevScan AI · <Link to="/" className="hover:underline">Back to landing</Link>
+            © 2026 DevScan AI · <Link to="/about" className="hover:underline">About DevScan</Link>
           </div>
         </div>
 

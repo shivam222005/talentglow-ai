@@ -34,8 +34,8 @@ export function SiteNav() {
           ))}
         </div>
         <div className="hidden items-center gap-3 md:flex">
-          <Link to="/login" className="text-sm font-medium text-muted-foreground hover:text-foreground">Log in</Link>
-          <Link to="/signup" className="rounded-full gradient-primary px-4 py-1.5 text-sm font-semibold text-white glow-purple transition-transform hover:scale-[1.03]">
+          <Link to="/auth" className="text-sm font-medium text-muted-foreground hover:text-foreground">Log in</Link>
+          <Link to="/auth" className="rounded-full gradient-primary px-4 py-1.5 text-sm font-semibold text-white glow-purple transition-transform hover:scale-[1.03]">
             Get Started
           </Link>
         </div>
@@ -51,8 +51,8 @@ export function SiteNav() {
                 {n.label}
               </Link>
             ))}
-            <Link to="/login" onClick={() => setOpen(false)} className="text-sm">Log in</Link>
-            <Link to="/signup" onClick={() => setOpen(false)} className="rounded-full gradient-primary px-4 py-2 text-center text-sm font-semibold text-white">
+            <Link to="/auth" onClick={() => setOpen(false)} className="text-sm">Log in</Link>
+            <Link to="/auth" onClick={() => setOpen(false)} className="rounded-full gradient-primary px-4 py-2 text-center text-sm font-semibold text-white">
               Get Started
             </Link>
           </div>

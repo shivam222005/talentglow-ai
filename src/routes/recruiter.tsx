@@ -4,6 +4,7 @@ import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, RadarChart, 
 import { Filter, ArrowUpRight, Search } from "lucide-react";
 
 export const Route = createFileRoute("/recruiter")({
+  ssr: false,
   head: () => ({ meta: [{ title: "Recruiter Dashboard — DevScan AI" }] }),
   component: RecruiterDashboard,
 });

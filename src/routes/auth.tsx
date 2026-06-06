@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Eye, EyeOff, Github, Mail, Check, ArrowRight, Sparkles, TrendingUp, GitBranch, Activity, Loader2, AlertCircle } from "lucide-react";
 import authHero from "@/assets/auth-hero.asset.json";
 import { supabase } from "@/integrations/supabase/client";
+import { lovable } from "@/integrations/lovable";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/auth")({
@@ -38,6 +39,7 @@ function AuthPage() {
   const [name, setName] = useState("");
   const [remember, setRemember] = useState(true);
   const [loading, setLoading] = useState(false);
+  const [oauthLoading, setOauthLoading] = useState<"google" | "github" | null>(null);
   const [error, setError] = useState<string | null>(null);
   const strength = useMemo(() => passwordStrength(pw), [pw]);
 
@@ -117,6 +119,34 @@ function AuthPage() {
     }
   };
 
+  const signInWithGoogle = async () => {
+    setError(null);
+    setOauthLoading("google");
+    try {
+      const result = await lovable.auth.signInWithOAuth("google", {
+        redirect_uri: window.location.origin,
+        extraParams: { prompt: "select_account" },
+      });
+
+      if (result.error) throw result.error;
+      if (result.redirected) return;
+
+      toast.success("Signed in with Google.");
+      navigate({ to: "/dashboard", replace: true });
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : "Google sign-in failed.";
+      setError(msg);
+      toast.error(msg);
+      setOauthLoading(null);
+    }
+  };
+
+  const signInWithGithub = () => {
+    const msg = "GitHub sign-in is not supported by this backend yet. Please use Google or email/password.";
+    setError(msg);
+    toast.error(msg);
+  };
+
   return (
     <div className="lightui min-h-screen w-full">
       <div className="grid min-h-screen lg:grid-cols-2">
@@ -174,8 +204,18 @@ function AuthPage() {
 
                   {/* OAuth */}
                   <div className="mt-7 grid grid-cols-2 gap-3">
-                    <OauthButton icon={<GoogleIcon />} label="Google" />
-                    <OauthButton icon={<Github className="size-4" />} label="GitHub" />
+                    <OauthButton
+                      icon={oauthLoading === "google" ? <Loader2 className="size-4 animate-spin" /> : <GoogleIcon />}
+                      label={oauthLoading === "google" ? "Google…" : "Google"}
+                      onClick={signInWithGoogle}
+                      disabled={Boolean(oauthLoading || loading)}
+                    />
+                    <OauthButton
+                      icon={<Github className="size-4" />}
+                      label="GitHub"
+                      onClick={signInWithGithub}
+                      disabled={Boolean(oauthLoading || loading)}
+                    />
                   </div>
 
                   <div className="my-6 flex items-center gap-3 text-xs text-[oklch(0.55_0.02_260)]">
@@ -495,10 +535,22 @@ function PasswordMeter({ strength }: { strength: number }) {
   );
 }
 
-function OauthButton({ icon, label }: { icon: React.ReactNode; label: string }) {
+function OauthButton({
+  icon,
+  label,
+  onClick,
+  disabled,
+}: {
+  icon: React.ReactNode;
+  label: string;
+  onClick: () => void;
+  disabled?: boolean;
+}) {
   return (
     <button
       type="button"
+      onClick={onClick}
+      disabled={disabled}
       className="inline-flex h-11 items-center justify-center gap-2 rounded-xl bg-white px-4 text-sm font-medium text-[oklch(0.25_0.02_260)] ring-1 ring-[oklch(0.9_0.015_250)] transition-all hover:bg-[oklch(0.97_0.005_250)] hover:ring-[oklch(0.8_0.04_260)]"
     >
       {icon}

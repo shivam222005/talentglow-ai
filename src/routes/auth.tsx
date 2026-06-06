@@ -1,8 +1,10 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Eye, EyeOff, Github, Mail, Check, ArrowRight, Sparkles, TrendingUp, GitBranch, Activity } from "lucide-react";
+import { Eye, EyeOff, Github, Mail, Check, ArrowRight, Sparkles, TrendingUp, GitBranch, Activity, Loader2, AlertCircle } from "lucide-react";
 import authHero from "@/assets/auth-hero.asset.json";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
 
 export const Route = createFileRoute("/auth")({
   head: () => ({
@@ -25,6 +27,8 @@ function passwordStrength(pw: string) {
   return s; // 0..4
 }
 
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
 function AuthPage() {
   const navigate = useNavigate();
   const [mode, setMode] = useState<Mode>("login");
@@ -33,11 +37,84 @@ function AuthPage() {
   const [pw, setPw] = useState("");
   const [name, setName] = useState("");
   const [remember, setRemember] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const strength = useMemo(() => passwordStrength(pw), [pw]);
 
-  const submit = (e: React.FormEvent) => {
+  // If already authenticated, send to dashboard
+  useEffect(() => {
+    let active = true;
+    supabase.auth.getSession().then(({ data }) => {
+      if (active && data.session) navigate({ to: "/dashboard", replace: true });
+    });
+    const { data: sub } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (session) navigate({ to: "/dashboard", replace: true });
+    });
+    return () => {
+      active = false;
+      sub.subscription.unsubscribe();
+    };
+  }, [navigate]);
+
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault();
-    navigate({ to: "/dashboard" });
+    setError(null);
+
+    if (!EMAIL_RE.test(email.trim())) {
+      setError("Please enter a valid email address.");
+      return;
+    }
+    if (mode === "signup") {
+      if (!name.trim()) {
+        setError("Please enter your full name.");
+        return;
+      }
+      if (strength < 2) {
+        setError("Password is too weak. Use 8+ chars with letters, numbers, or symbols.");
+        return;
+      }
+    } else if (pw.length < 6) {
+      setError("Password must be at least 6 characters.");
+      return;
+    }
+
+    setLoading(true);
+    try {
+      if (mode === "signup") {
+        const { error: err } = await supabase.auth.signUp({
+          email: email.trim(),
+          password: pw,
+          options: {
+            emailRedirectTo: `${window.location.origin}/dashboard`,
+            data: { full_name: name.trim() },
+          },
+        });
+        if (err) throw err;
+        toast.success("Account created. Welcome to DevScan AI!");
+        // onAuthStateChange will redirect when session arrives
+      } else {
+        const { error: err } = await supabase.auth.signInWithPassword({
+          email: email.trim(),
+          password: pw,
+        });
+        if (err) throw err;
+        toast.success("Signed in successfully.");
+      }
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : "Authentication failed.";
+      // Friendlier message for common Supabase errors
+      const friendly = /invalid login credentials/i.test(msg)
+        ? "Incorrect email or password."
+        : /user already registered/i.test(msg)
+          ? "An account with this email already exists. Try signing in instead."
+          : /password.*(pwned|leaked|compromised)/i.test(msg)
+            ? "This password has appeared in a data breach. Please choose another."
+            : msg;
+      setError(friendly);
+      toast.error(friendly);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (

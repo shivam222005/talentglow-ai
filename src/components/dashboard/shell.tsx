@@ -1,4 +1,4 @@
-import { Link, useRouterState } from "@tanstack/react-router";
+import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
 import {
   LayoutDashboard, FileText, Github, Brain, Target, FolderGit2, Calendar, Map,
   FileEdit, Mic, Sparkles, Briefcase, GraduationCap, Settings,
@@ -6,6 +6,7 @@ import {
   Bell, Search, LogOut,
 } from "lucide-react";
 import type { ReactNode } from "react";
+import { supabase } from "@/integrations/supabase/client";
 
 const STUDENT_NAV = [
   { to: "/dashboard", icon: LayoutDashboard, label: "Overview" },
@@ -36,6 +37,12 @@ const RECRUITER_NAV = [
 export function DashboardShell({ role, children }: { role: "student" | "recruiter"; children?: ReactNode }) {
   const nav = role === "student" ? STUDENT_NAV : RECRUITER_NAV;
   const path = useRouterState({ select: (s) => s.location.pathname });
+  const navigate = useNavigate();
+
+  const handleSignOut = async () => {
+    await supabase.auth.signOut();
+    navigate({ to: "/auth", replace: true });
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -73,7 +80,7 @@ export function DashboardShell({ role, children }: { role: "student" | "recruite
                 <div className="font-semibold">Alex Rivera</div>
                 <div className="text-muted-foreground">Pro plan</div>
               </div>
-              <Link to="/login" className="text-muted-foreground hover:text-foreground" aria-label="Sign out"><LogOut className="size-4" /></Link>
+              <button type="button" onClick={handleSignOut} className="text-muted-foreground hover:text-foreground" aria-label="Sign out"><LogOut className="size-4" /></button>
             </div>
           </div>
           <div className="mt-3 flex gap-2 text-xs">

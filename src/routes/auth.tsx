@@ -245,12 +245,29 @@ function AuthPage() {
                       </label>
                     )}
 
+                    {error && (
+                      <div className="flex items-start gap-2 rounded-lg bg-red-50 px-3 py-2 text-xs text-red-700 ring-1 ring-red-200">
+                        <AlertCircle className="mt-0.5 size-3.5 shrink-0" />
+                        <span>{error}</span>
+                      </div>
+                    )}
+
                     <button
                       type="submit"
-                      className="group mt-2 inline-flex h-11 w-full items-center justify-center gap-2 rounded-xl gradient-blue text-sm font-semibold text-white shadow-lg shadow-blue-500/25 transition-all hover:shadow-xl hover:shadow-blue-500/30 active:scale-[0.99]"
+                      disabled={loading}
+                      className="group mt-2 inline-flex h-11 w-full items-center justify-center gap-2 rounded-xl gradient-blue text-sm font-semibold text-white shadow-lg shadow-blue-500/25 transition-all hover:shadow-xl hover:shadow-blue-500/30 active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-70"
                     >
-                      {mode === "login" ? "Sign in" : "Create account"}
-                      <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
+                      {loading ? (
+                        <>
+                          <Loader2 className="size-4 animate-spin" />
+                          {mode === "login" ? "Signing in…" : "Creating account…"}
+                        </>
+                      ) : (
+                        <>
+                          {mode === "login" ? "Sign in" : "Create account"}
+                          <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
+                        </>
+                      )}
                     </button>
 
                     {mode === "signup" && (

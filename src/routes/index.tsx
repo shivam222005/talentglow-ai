@@ -1,17 +1,29 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { SiteNav, SiteFooter } from "@/components/site-chrome";
-import { Hero } from "@/components/landing/hero";
-import { Features, AIInsights } from "@/components/landing/features";
-import { LiveAnalytics } from "@/components/landing/analytics";
-import { TrustedBy, Testimonials, Pricing, FAQ, CTA } from "@/components/landing/sections";
+import {
+  PremiumHero,
+  TrustedStrip,
+  FeatureBento,
+  AIInsightsPreview,
+  TestimonialsRow,
+  PremiumCTA,
+} from "@/components/landing/premium";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "DevScan AI — Developer Portfolio Intelligence" },
-      { name: "description", content: "AI-powered resume, GitHub, and project analysis for students, developers and recruiters." },
+      { title: "DevScan AI — AI-Powered Developer Portfolio Intelligence" },
+      {
+        name: "description",
+        content:
+          "Analyze your resume, GitHub, and projects with AI. Skill tracking, interview prep, and a recruiter dashboard built for modern developers.",
+      },
       { property: "og:title", content: "DevScan AI — Developer Portfolio Intelligence" },
-      { property: "og:description", content: "AI-powered resume, GitHub, and project analysis for students, developers and recruiters." },
+      {
+        property: "og:description",
+        content:
+          "AI resume analysis, GitHub insights, skill radar, and interview prep for developers and recruiters.",
+      },
     ],
   }),
   component: HomePage,
@@ -19,18 +31,15 @@ export const Route = createFileRoute("/")({
 
 function HomePage() {
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="relative min-h-screen bg-background text-foreground">
       <SiteNav />
-      <main className="pt-16">
-        <Hero />
-        <TrustedBy />
-        <Features />
-        <AIInsights />
-        <LiveAnalytics />
-        <Testimonials />
-        <Pricing />
-        <FAQ />
-        <CTA />
+      <main>
+        <PremiumHero />
+        <TrustedStrip />
+        <FeatureBento />
+        <AIInsightsPreview />
+        <TestimonialsRow />
+        <PremiumCTA />
       </main>
       <SiteFooter />
     </div>

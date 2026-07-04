@@ -1,0 +1,95 @@
+{
+  "version": 1,
+  "sdk_version": "0.20.0",
+  "path": "/mcp",
+  "auth": {
+    "type": "none"
+  },
+  "mcp": {
+    "server": {
+      "name": "devscan-ai-mcp",
+      "version": "0.1.0",
+      "title": "DevScan AI"
+    },
+    "tools": [
+      {
+        "name": "analyze_github_profile",
+        "title": "Analyze GitHub profile",
+        "description": "Fetch public GitHub profile stats (repos, followers, top languages) for a username and return a compact summary suitable for recruiter screening.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": true
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "username": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "^[a-zA-Z0-9-]+$",
+              "description": "GitHub username to analyze (e.g. 'torvalds')."
+            }
+          },
+          "required": [
+            "username"
+          ]
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "score_resume",
+        "title": "Score resume text",
+        "description": "Analyze pasted resume text and return a DevScan-style breakdown: ATS-friendliness, quantified impact, action verbs, and concrete improvement suggestions.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "text": {
+              "type": "string",
+              "minLength": 50,
+              "description": "Full resume text (plain text)."
+            }
+          },
+          "required": [
+            "text"
+          ]
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "list_devscan_features",
+        "title": "List DevScan AI features",
+        "description": "List every feature available in DevScan AI, optionally filtered by audience ('student' or 'recruiter'), for orientation and capability discovery.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "audience": {
+              "default": "all",
+              "description": "Filter features by audience.",
+              "type": "string",
+              "enum": [
+                "student",
+                "recruiter",
+                "all"
+              ]
+            }
+          }
+        },
+        "outputSchema": null
+      }
+    ]
+  }
+}

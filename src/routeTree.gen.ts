@@ -23,6 +23,7 @@ import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as RecruiterReportsRouteImport } from './routes/recruiter.reports'
 import { Route as RecruiterRankingRouteImport } from './routes/recruiter.ranking'
+import { Route as RecruiterMessagesRouteImport } from './routes/recruiter.messages'
 import { Route as RecruiterCompareRouteImport } from './routes/recruiter.compare'
 import { Route as RecruiterCandidatesRouteImport } from './routes/recruiter.candidates'
 import { Route as RecruiterAnalyticsRouteImport } from './routes/recruiter.analytics'
@@ -34,6 +35,7 @@ import { Route as DashboardResumeRouteImport } from './routes/dashboard.resume'
 import { Route as DashboardProjectsRouteImport } from './routes/dashboard.projects'
 import { Route as DashboardPlacementRouteImport } from './routes/dashboard.placement'
 import { Route as DashboardMockInterviewRouteImport } from './routes/dashboard.mock-interview'
+import { Route as DashboardMessagesRouteImport } from './routes/dashboard.messages'
 import { Route as DashboardJobsRouteImport } from './routes/dashboard.jobs'
 import { Route as DashboardInterviewsRouteImport } from './routes/dashboard.interviews'
 import { Route as DashboardInternshipsRouteImport } from './routes/dashboard.internships'
@@ -113,6 +115,11 @@ const RecruiterRankingRoute = RecruiterRankingRouteImport.update({
   path: '/ranking',
   getParentRoute: () => RecruiterRoute,
 } as any)
+const RecruiterMessagesRoute = RecruiterMessagesRouteImport.update({
+  id: '/messages',
+  path: '/messages',
+  getParentRoute: () => RecruiterRoute,
+} as any)
 const RecruiterCompareRoute = RecruiterCompareRouteImport.update({
   id: '/compare',
   path: '/compare',
@@ -166,6 +173,11 @@ const DashboardPlacementRoute = DashboardPlacementRouteImport.update({
 const DashboardMockInterviewRoute = DashboardMockInterviewRouteImport.update({
   id: '/mock-interview',
   path: '/mock-interview',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardMessagesRoute = DashboardMessagesRouteImport.update({
+  id: '/messages',
+  path: '/messages',
   getParentRoute: () => DashboardRoute,
 } as any)
 const DashboardJobsRoute = DashboardJobsRouteImport.update({
@@ -232,6 +244,7 @@ export interface FileRoutesByFullPath {
   '/dashboard/internships': typeof DashboardInternshipsRoute
   '/dashboard/interviews': typeof DashboardInterviewsRoute
   '/dashboard/jobs': typeof DashboardJobsRoute
+  '/dashboard/messages': typeof DashboardMessagesRoute
   '/dashboard/mock-interview': typeof DashboardMockInterviewRoute
   '/dashboard/placement': typeof DashboardPlacementRoute
   '/dashboard/projects': typeof DashboardProjectsRoute
@@ -243,6 +256,7 @@ export interface FileRoutesByFullPath {
   '/recruiter/analytics': typeof RecruiterAnalyticsRoute
   '/recruiter/candidates': typeof RecruiterCandidatesRoute
   '/recruiter/compare': typeof RecruiterCompareRoute
+  '/recruiter/messages': typeof RecruiterMessagesRoute
   '/recruiter/ranking': typeof RecruiterRankingRoute
   '/recruiter/reports': typeof RecruiterReportsRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
@@ -267,6 +281,7 @@ export interface FileRoutesByTo {
   '/dashboard/internships': typeof DashboardInternshipsRoute
   '/dashboard/interviews': typeof DashboardInterviewsRoute
   '/dashboard/jobs': typeof DashboardJobsRoute
+  '/dashboard/messages': typeof DashboardMessagesRoute
   '/dashboard/mock-interview': typeof DashboardMockInterviewRoute
   '/dashboard/placement': typeof DashboardPlacementRoute
   '/dashboard/projects': typeof DashboardProjectsRoute
@@ -278,6 +293,7 @@ export interface FileRoutesByTo {
   '/recruiter/analytics': typeof RecruiterAnalyticsRoute
   '/recruiter/candidates': typeof RecruiterCandidatesRoute
   '/recruiter/compare': typeof RecruiterCompareRoute
+  '/recruiter/messages': typeof RecruiterMessagesRoute
   '/recruiter/ranking': typeof RecruiterRankingRoute
   '/recruiter/reports': typeof RecruiterReportsRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
@@ -303,6 +319,7 @@ export interface FileRoutesById {
   '/dashboard/internships': typeof DashboardInternshipsRoute
   '/dashboard/interviews': typeof DashboardInterviewsRoute
   '/dashboard/jobs': typeof DashboardJobsRoute
+  '/dashboard/messages': typeof DashboardMessagesRoute
   '/dashboard/mock-interview': typeof DashboardMockInterviewRoute
   '/dashboard/placement': typeof DashboardPlacementRoute
   '/dashboard/projects': typeof DashboardProjectsRoute
@@ -314,6 +331,7 @@ export interface FileRoutesById {
   '/recruiter/analytics': typeof RecruiterAnalyticsRoute
   '/recruiter/candidates': typeof RecruiterCandidatesRoute
   '/recruiter/compare': typeof RecruiterCompareRoute
+  '/recruiter/messages': typeof RecruiterMessagesRoute
   '/recruiter/ranking': typeof RecruiterRankingRoute
   '/recruiter/reports': typeof RecruiterReportsRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
@@ -340,6 +358,7 @@ export interface FileRouteTypes {
     | '/dashboard/internships'
     | '/dashboard/interviews'
     | '/dashboard/jobs'
+    | '/dashboard/messages'
     | '/dashboard/mock-interview'
     | '/dashboard/placement'
     | '/dashboard/projects'
@@ -351,6 +370,7 @@ export interface FileRouteTypes {
     | '/recruiter/analytics'
     | '/recruiter/candidates'
     | '/recruiter/compare'
+    | '/recruiter/messages'
     | '/recruiter/ranking'
     | '/recruiter/reports'
     | '/.mcp/invoke-tool/$tool'
@@ -375,6 +395,7 @@ export interface FileRouteTypes {
     | '/dashboard/internships'
     | '/dashboard/interviews'
     | '/dashboard/jobs'
+    | '/dashboard/messages'
     | '/dashboard/mock-interview'
     | '/dashboard/placement'
     | '/dashboard/projects'
@@ -386,6 +407,7 @@ export interface FileRouteTypes {
     | '/recruiter/analytics'
     | '/recruiter/candidates'
     | '/recruiter/compare'
+    | '/recruiter/messages'
     | '/recruiter/ranking'
     | '/recruiter/reports'
     | '/.mcp/invoke-tool/$tool'
@@ -410,6 +432,7 @@ export interface FileRouteTypes {
     | '/dashboard/internships'
     | '/dashboard/interviews'
     | '/dashboard/jobs'
+    | '/dashboard/messages'
     | '/dashboard/mock-interview'
     | '/dashboard/placement'
     | '/dashboard/projects'
@@ -421,6 +444,7 @@ export interface FileRouteTypes {
     | '/recruiter/analytics'
     | '/recruiter/candidates'
     | '/recruiter/compare'
+    | '/recruiter/messages'
     | '/recruiter/ranking'
     | '/recruiter/reports'
     | '/.mcp/invoke-tool/$tool'
@@ -544,6 +568,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RecruiterRankingRouteImport
       parentRoute: typeof RecruiterRoute
     }
+    '/recruiter/messages': {
+      id: '/recruiter/messages'
+      path: '/messages'
+      fullPath: '/recruiter/messages'
+      preLoaderRoute: typeof RecruiterMessagesRouteImport
+      parentRoute: typeof RecruiterRoute
+    }
     '/recruiter/compare': {
       id: '/recruiter/compare'
       path: '/compare'
@@ -621,6 +652,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardMockInterviewRouteImport
       parentRoute: typeof DashboardRoute
     }
+    '/dashboard/messages': {
+      id: '/dashboard/messages'
+      path: '/messages'
+      fullPath: '/dashboard/messages'
+      preLoaderRoute: typeof DashboardMessagesRouteImport
+      parentRoute: typeof DashboardRoute
+    }
     '/dashboard/jobs': {
       id: '/dashboard/jobs'
       path: '/jobs'
@@ -686,6 +724,7 @@ interface DashboardRouteChildren {
   DashboardInternshipsRoute: typeof DashboardInternshipsRoute
   DashboardInterviewsRoute: typeof DashboardInterviewsRoute
   DashboardJobsRoute: typeof DashboardJobsRoute
+  DashboardMessagesRoute: typeof DashboardMessagesRoute
   DashboardMockInterviewRoute: typeof DashboardMockInterviewRoute
   DashboardPlacementRoute: typeof DashboardPlacementRoute
   DashboardProjectsRoute: typeof DashboardProjectsRoute
@@ -702,6 +741,7 @@ const DashboardRouteChildren: DashboardRouteChildren = {
   DashboardInternshipsRoute: DashboardInternshipsRoute,
   DashboardInterviewsRoute: DashboardInterviewsRoute,
   DashboardJobsRoute: DashboardJobsRoute,
+  DashboardMessagesRoute: DashboardMessagesRoute,
   DashboardMockInterviewRoute: DashboardMockInterviewRoute,
   DashboardPlacementRoute: DashboardPlacementRoute,
   DashboardProjectsRoute: DashboardProjectsRoute,
@@ -720,6 +760,7 @@ interface RecruiterRouteChildren {
   RecruiterAnalyticsRoute: typeof RecruiterAnalyticsRoute
   RecruiterCandidatesRoute: typeof RecruiterCandidatesRoute
   RecruiterCompareRoute: typeof RecruiterCompareRoute
+  RecruiterMessagesRoute: typeof RecruiterMessagesRoute
   RecruiterRankingRoute: typeof RecruiterRankingRoute
   RecruiterReportsRoute: typeof RecruiterReportsRoute
 }
@@ -728,6 +769,7 @@ const RecruiterRouteChildren: RecruiterRouteChildren = {
   RecruiterAnalyticsRoute: RecruiterAnalyticsRoute,
   RecruiterCandidatesRoute: RecruiterCandidatesRoute,
   RecruiterCompareRoute: RecruiterCompareRoute,
+  RecruiterMessagesRoute: RecruiterMessagesRoute,
   RecruiterRankingRoute: RecruiterRankingRoute,
   RecruiterReportsRoute: RecruiterReportsRoute,
 }

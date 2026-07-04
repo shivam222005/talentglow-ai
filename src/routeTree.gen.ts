@@ -13,6 +13,7 @@ import { Route as SolutionsRouteImport } from './routes/solutions'
 import { Route as SignupRouteImport } from './routes/signup'
 import { Route as RecruiterRouteImport } from './routes/recruiter'
 import { Route as PricingRouteImport } from './routes/pricing'
+import { Route as McpRouteImport } from './routes/mcp'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as FeaturesRouteImport } from './routes/features'
 import { Route as DashboardRouteImport } from './routes/dashboard'
@@ -38,6 +39,9 @@ import { Route as DashboardInterviewsRouteImport } from './routes/dashboard.inte
 import { Route as DashboardInternshipsRouteImport } from './routes/dashboard.internships'
 import { Route as DashboardGithubRouteImport } from './routes/dashboard.github'
 import { Route as DashboardAssistantRouteImport } from './routes/dashboard.assistant'
+import { Route as Char91DotwellKnownChar93OauthProtectedResourceRouteImport } from './routes/[.well-known]/oauth-protected-resource'
+import { Route as Char91DotmcpChar93ListToolsRouteImport } from './routes/[.mcp]/list-tools'
+import { Route as Char91DotmcpChar93InvokeToolToolRouteImport } from './routes/[.mcp]/invoke-tool/$tool'
 
 const SolutionsRoute = SolutionsRouteImport.update({
   id: '/solutions',
@@ -57,6 +61,11 @@ const RecruiterRoute = RecruiterRouteImport.update({
 const PricingRoute = PricingRouteImport.update({
   id: '/pricing',
   path: '/pricing',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const McpRoute = McpRouteImport.update({
+  id: '/mcp',
+  path: '/mcp',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LoginRoute = LoginRouteImport.update({
@@ -184,6 +193,24 @@ const DashboardAssistantRoute = DashboardAssistantRouteImport.update({
   path: '/assistant',
   getParentRoute: () => DashboardRoute,
 } as any)
+const Char91DotwellKnownChar93OauthProtectedResourceRoute =
+  Char91DotwellKnownChar93OauthProtectedResourceRouteImport.update({
+    id: '/.well-known/oauth-protected-resource',
+    path: '/.well-known/oauth-protected-resource',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const Char91DotmcpChar93ListToolsRoute =
+  Char91DotmcpChar93ListToolsRouteImport.update({
+    id: '/.mcp/list-tools',
+    path: '/.mcp/list-tools',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const Char91DotmcpChar93InvokeToolToolRoute =
+  Char91DotmcpChar93InvokeToolToolRouteImport.update({
+    id: '/.mcp/invoke-tool/$tool',
+    path: '/.mcp/invoke-tool/$tool',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -193,10 +220,13 @@ export interface FileRoutesByFullPath {
   '/dashboard': typeof DashboardRouteWithChildren
   '/features': typeof FeaturesRoute
   '/login': typeof LoginRoute
+  '/mcp': typeof McpRoute
   '/pricing': typeof PricingRoute
   '/recruiter': typeof RecruiterRouteWithChildren
   '/signup': typeof SignupRoute
   '/solutions': typeof SolutionsRoute
+  '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
+  '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/dashboard/assistant': typeof DashboardAssistantRoute
   '/dashboard/github': typeof DashboardGithubRoute
   '/dashboard/internships': typeof DashboardInternshipsRoute
@@ -215,6 +245,7 @@ export interface FileRoutesByFullPath {
   '/recruiter/compare': typeof RecruiterCompareRoute
   '/recruiter/ranking': typeof RecruiterRankingRoute
   '/recruiter/reports': typeof RecruiterReportsRoute
+  '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -224,10 +255,13 @@ export interface FileRoutesByTo {
   '/dashboard': typeof DashboardRouteWithChildren
   '/features': typeof FeaturesRoute
   '/login': typeof LoginRoute
+  '/mcp': typeof McpRoute
   '/pricing': typeof PricingRoute
   '/recruiter': typeof RecruiterRouteWithChildren
   '/signup': typeof SignupRoute
   '/solutions': typeof SolutionsRoute
+  '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
+  '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/dashboard/assistant': typeof DashboardAssistantRoute
   '/dashboard/github': typeof DashboardGithubRoute
   '/dashboard/internships': typeof DashboardInternshipsRoute
@@ -246,6 +280,7 @@ export interface FileRoutesByTo {
   '/recruiter/compare': typeof RecruiterCompareRoute
   '/recruiter/ranking': typeof RecruiterRankingRoute
   '/recruiter/reports': typeof RecruiterReportsRoute
+  '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -256,10 +291,13 @@ export interface FileRoutesById {
   '/dashboard': typeof DashboardRouteWithChildren
   '/features': typeof FeaturesRoute
   '/login': typeof LoginRoute
+  '/mcp': typeof McpRoute
   '/pricing': typeof PricingRoute
   '/recruiter': typeof RecruiterRouteWithChildren
   '/signup': typeof SignupRoute
   '/solutions': typeof SolutionsRoute
+  '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
+  '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/dashboard/assistant': typeof DashboardAssistantRoute
   '/dashboard/github': typeof DashboardGithubRoute
   '/dashboard/internships': typeof DashboardInternshipsRoute
@@ -278,6 +316,7 @@ export interface FileRoutesById {
   '/recruiter/compare': typeof RecruiterCompareRoute
   '/recruiter/ranking': typeof RecruiterRankingRoute
   '/recruiter/reports': typeof RecruiterReportsRoute
+  '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -289,10 +328,13 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/features'
     | '/login'
+    | '/mcp'
     | '/pricing'
     | '/recruiter'
     | '/signup'
     | '/solutions'
+    | '/.mcp/list-tools'
+    | '/.well-known/oauth-protected-resource'
     | '/dashboard/assistant'
     | '/dashboard/github'
     | '/dashboard/internships'
@@ -311,6 +353,7 @@ export interface FileRouteTypes {
     | '/recruiter/compare'
     | '/recruiter/ranking'
     | '/recruiter/reports'
+    | '/.mcp/invoke-tool/$tool'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -320,10 +363,13 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/features'
     | '/login'
+    | '/mcp'
     | '/pricing'
     | '/recruiter'
     | '/signup'
     | '/solutions'
+    | '/.mcp/list-tools'
+    | '/.well-known/oauth-protected-resource'
     | '/dashboard/assistant'
     | '/dashboard/github'
     | '/dashboard/internships'
@@ -342,6 +388,7 @@ export interface FileRouteTypes {
     | '/recruiter/compare'
     | '/recruiter/ranking'
     | '/recruiter/reports'
+    | '/.mcp/invoke-tool/$tool'
   id:
     | '__root__'
     | '/'
@@ -351,10 +398,13 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/features'
     | '/login'
+    | '/mcp'
     | '/pricing'
     | '/recruiter'
     | '/signup'
     | '/solutions'
+    | '/.mcp/list-tools'
+    | '/.well-known/oauth-protected-resource'
     | '/dashboard/assistant'
     | '/dashboard/github'
     | '/dashboard/internships'
@@ -373,6 +423,7 @@ export interface FileRouteTypes {
     | '/recruiter/compare'
     | '/recruiter/ranking'
     | '/recruiter/reports'
+    | '/.mcp/invoke-tool/$tool'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -383,10 +434,14 @@ export interface RootRouteChildren {
   DashboardRoute: typeof DashboardRouteWithChildren
   FeaturesRoute: typeof FeaturesRoute
   LoginRoute: typeof LoginRoute
+  McpRoute: typeof McpRoute
   PricingRoute: typeof PricingRoute
   RecruiterRoute: typeof RecruiterRouteWithChildren
   SignupRoute: typeof SignupRoute
   SolutionsRoute: typeof SolutionsRoute
+  Char91DotmcpChar93ListToolsRoute: typeof Char91DotmcpChar93ListToolsRoute
+  Char91DotwellKnownChar93OauthProtectedResourceRoute: typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
+  Char91DotmcpChar93InvokeToolToolRoute: typeof Char91DotmcpChar93InvokeToolToolRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -417,6 +472,13 @@ declare module '@tanstack/react-router' {
       path: '/pricing'
       fullPath: '/pricing'
       preLoaderRoute: typeof PricingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/mcp': {
+      id: '/mcp'
+      path: '/mcp'
+      fullPath: '/mcp'
+      preLoaderRoute: typeof McpRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/login': {
@@ -594,6 +656,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardAssistantRouteImport
       parentRoute: typeof DashboardRoute
     }
+    '/.well-known/oauth-protected-resource': {
+      id: '/.well-known/oauth-protected-resource'
+      path: '/.well-known/oauth-protected-resource'
+      fullPath: '/.well-known/oauth-protected-resource'
+      preLoaderRoute: typeof Char91DotwellKnownChar93OauthProtectedResourceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/.mcp/list-tools': {
+      id: '/.mcp/list-tools'
+      path: '/.mcp/list-tools'
+      fullPath: '/.mcp/list-tools'
+      preLoaderRoute: typeof Char91DotmcpChar93ListToolsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/.mcp/invoke-tool/$tool': {
+      id: '/.mcp/invoke-tool/$tool'
+      path: '/.mcp/invoke-tool/$tool'
+      fullPath: '/.mcp/invoke-tool/$tool'
+      preLoaderRoute: typeof Char91DotmcpChar93InvokeToolToolRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -661,10 +744,15 @@ const rootRouteChildren: RootRouteChildren = {
   DashboardRoute: DashboardRouteWithChildren,
   FeaturesRoute: FeaturesRoute,
   LoginRoute: LoginRoute,
+  McpRoute: McpRoute,
   PricingRoute: PricingRoute,
   RecruiterRoute: RecruiterRouteWithChildren,
   SignupRoute: SignupRoute,
   SolutionsRoute: SolutionsRoute,
+  Char91DotmcpChar93ListToolsRoute: Char91DotmcpChar93ListToolsRoute,
+  Char91DotwellKnownChar93OauthProtectedResourceRoute:
+    Char91DotwellKnownChar93OauthProtectedResourceRoute,
+  Char91DotmcpChar93InvokeToolToolRoute: Char91DotmcpChar93InvokeToolToolRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

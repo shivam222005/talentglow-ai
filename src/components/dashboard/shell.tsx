@@ -1,7 +1,7 @@
 import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
 import {
   LayoutDashboard, FileText, Github, Brain, Target, FolderGit2, Calendar, Map,
-  FileEdit, Mic, Sparkles, Briefcase, GraduationCap, Settings,
+  FileEdit, Mic, Sparkles, Briefcase, GraduationCap, Settings, MessageSquare,
   Users, ListOrdered, GitCompare, BarChart3, FileDown,
   Bell, Search, LogOut,
 } from "lucide-react";

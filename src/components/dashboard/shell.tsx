@@ -20,6 +20,7 @@ const STUDENT_NAV = [
   { to: "/dashboard/resume-builder", icon: FileEdit, label: "Resume Builder" },
   { to: "/dashboard/mock-interview", icon: Mic, label: "Mock Interview" },
   { to: "/dashboard/assistant", icon: Sparkles, label: "AI Career Assistant" },
+  { to: "/dashboard/messages", icon: MessageSquare, label: "Messages" },
   { to: "/dashboard/jobs", icon: Briefcase, label: "Job Matches" },
   { to: "/dashboard/internships", icon: GraduationCap, label: "Internships" },
   { to: "/dashboard/settings", icon: Settings, label: "Profile Settings" },
@@ -28,6 +29,7 @@ const STUDENT_NAV = [
 const RECRUITER_NAV = [
   { to: "/recruiter", icon: LayoutDashboard, label: "Overview" },
   { to: "/recruiter/candidates", icon: Users, label: "Candidate Search" },
+  { to: "/recruiter/messages", icon: MessageSquare, label: "Messages" },
   { to: "/recruiter/ranking", icon: ListOrdered, label: "Ranking" },
   { to: "/recruiter/compare", icon: GitCompare, label: "Comparison" },
   { to: "/recruiter/analytics", icon: BarChart3, label: "Hiring Analytics" },

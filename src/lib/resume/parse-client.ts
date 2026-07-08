@@ -30,6 +30,7 @@ async function extractPdf(file: File): Promise<string> {
 }
 
 async function extractDocx(file: File): Promise<string> {
+  // @ts-expect-error - browser subpath has no types
   const mammoth: any = await import("mammoth/mammoth.browser.js").catch(() => import("mammoth"));
   const buf = await file.arrayBuffer();
   const result = await mammoth.extractRawText({ arrayBuffer: buf });

@@ -14,6 +14,65 @@ export type Database = {
   }
   public: {
     Tables: {
+      ats_reports: {
+        Row: {
+          ats_score: number
+          created_at: string
+          grammar_score: number
+          hard_skills: Json
+          id: string
+          keyword_match: number
+          missing_skills: Json
+          resume_id: string | null
+          soft_skills: Json
+          strengths: Json
+          suggestions: Json
+          summary: string | null
+          user_id: string
+          weaknesses: Json
+        }
+        Insert: {
+          ats_score?: number
+          created_at?: string
+          grammar_score?: number
+          hard_skills?: Json
+          id?: string
+          keyword_match?: number
+          missing_skills?: Json
+          resume_id?: string | null
+          soft_skills?: Json
+          strengths?: Json
+          suggestions?: Json
+          summary?: string | null
+          user_id: string
+          weaknesses?: Json
+        }
+        Update: {
+          ats_score?: number
+          created_at?: string
+          grammar_score?: number
+          hard_skills?: Json
+          id?: string
+          keyword_match?: number
+          missing_skills?: Json
+          resume_id?: string | null
+          soft_skills?: Json
+          strengths?: Json
+          suggestions?: Json
+          summary?: string | null
+          user_id?: string
+          weaknesses?: Json
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ats_reports_resume_id_fkey"
+            columns: ["resume_id"]
+            isOneToOne: false
+            referencedRelation: "resumes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       conversations: {
         Row: {
           created_at: string
@@ -38,6 +97,78 @@ export type Database = {
           last_message_preview?: string | null
           participant_a?: string
           participant_b?: string
+        }
+        Relationships: []
+      }
+      generated_resumes: {
+        Row: {
+          content_markdown: string
+          created_at: string
+          id: string
+          target_job: string | null
+          template: string
+          user_id: string
+        }
+        Insert: {
+          content_markdown: string
+          created_at?: string
+          id?: string
+          target_job?: string | null
+          template?: string
+          user_id: string
+        }
+        Update: {
+          content_markdown?: string
+          created_at?: string
+          id?: string
+          target_job?: string | null
+          template?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      github_reports: {
+        Row: {
+          ai_insights: string | null
+          commit_activity: Json
+          created_at: string
+          followers: number | null
+          id: string
+          public_repos: number | null
+          quality_score: number
+          top_languages: Json
+          top_repos: Json
+          total_stars: number | null
+          user_id: string
+          username: string
+        }
+        Insert: {
+          ai_insights?: string | null
+          commit_activity?: Json
+          created_at?: string
+          followers?: number | null
+          id?: string
+          public_repos?: number | null
+          quality_score?: number
+          top_languages?: Json
+          top_repos?: Json
+          total_stars?: number | null
+          user_id: string
+          username: string
+        }
+        Update: {
+          ai_insights?: string | null
+          commit_activity?: Json
+          created_at?: string
+          followers?: number | null
+          id?: string
+          public_repos?: number | null
+          quality_score?: number
+          top_languages?: Json
+          top_repos?: Json
+          total_stars?: number | null
+          user_id?: string
+          username?: string
         }
         Relationships: []
       }
@@ -118,6 +249,54 @@ export type Database = {
         }
         Relationships: []
       }
+      project_reports: {
+        Row: {
+          created_at: string
+          documentation: number | null
+          id: string
+          innovation: number | null
+          maintainability: number | null
+          quality: number | null
+          repo_name: string
+          repo_url: string | null
+          scalability: number | null
+          security: number | null
+          stack: string | null
+          suggestions: Json
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          documentation?: number | null
+          id?: string
+          innovation?: number | null
+          maintainability?: number | null
+          quality?: number | null
+          repo_name: string
+          repo_url?: string | null
+          scalability?: number | null
+          security?: number | null
+          stack?: string | null
+          suggestions?: Json
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          documentation?: number | null
+          id?: string
+          innovation?: number | null
+          maintainability?: number | null
+          quality?: number | null
+          repo_name?: string
+          repo_url?: string | null
+          scalability?: number | null
+          security?: number | null
+          stack?: string | null
+          suggestions?: Json
+          user_id?: string
+        }
+        Relationships: []
+      }
       push_subscriptions: {
         Row: {
           auth_key: string
@@ -142,6 +321,93 @@ export type Database = {
           id?: string
           p256dh?: string
           user_id?: string
+        }
+        Relationships: []
+      }
+      resumes: {
+        Row: {
+          created_at: string
+          extracted_text: string | null
+          file_name: string
+          file_path: string
+          id: string
+          mime_type: string | null
+          size_bytes: number | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          extracted_text?: string | null
+          file_name: string
+          file_path: string
+          id?: string
+          mime_type?: string | null
+          size_bytes?: number | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          extracted_text?: string | null
+          file_name?: string
+          file_path?: string
+          id?: string
+          mime_type?: string | null
+          size_bytes?: number | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      skill_scores: {
+        Row: {
+          ai_ml: number
+          backend: number
+          cloud: number
+          composite: number
+          database: number
+          devops: number
+          dsa: number
+          frontend: number
+          id: string
+          strongest: string | null
+          system_design: number
+          updated_at: string
+          user_id: string
+          weakest: string | null
+        }
+        Insert: {
+          ai_ml?: number
+          backend?: number
+          cloud?: number
+          composite?: number
+          database?: number
+          devops?: number
+          dsa?: number
+          frontend?: number
+          id?: string
+          strongest?: string | null
+          system_design?: number
+          updated_at?: string
+          user_id: string
+          weakest?: string | null
+        }
+        Update: {
+          ai_ml?: number
+          backend?: number
+          cloud?: number
+          composite?: number
+          database?: number
+          devops?: number
+          dsa?: number
+          frontend?: number
+          id?: string
+          strongest?: string | null
+          system_design?: number
+          updated_at?: string
+          user_id?: string
+          weakest?: string | null
         }
         Relationships: []
       }

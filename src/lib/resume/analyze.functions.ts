@@ -115,6 +115,39 @@ export const saveResumeMeta = createServerFn({ method: "POST" })
     return row;
   });
 
+const DEMO_ATS_REPORT = {
+  id: "demo-ats",
+  is_demo: true,
+  user_id: "demo",
+  resume_id: "demo",
+  ats_score: 87,
+  grammar_score: 92,
+  keyword_match: 78,
+  hard_skills: ["React", "TypeScript", "Node.js", "PostgreSQL", "GraphQL", "Docker", "AWS", "Redis", "Python", "REST APIs"],
+  soft_skills: ["Communication", "Leadership", "Problem solving", "Mentorship"],
+  missing_skills: ["Kubernetes", "Terraform", "Rust", "gRPC", "Kafka"],
+  strengths: [
+    "Quantified metrics on every experience bullet",
+    "Modern full-stack tooling with cloud deployment",
+    "Clear career progression across 3 companies",
+  ],
+  weaknesses: [
+    "No visible open-source or side-project section",
+    "Missing infrastructure keywords recruiters filter on",
+    "Summary is too generic — no vertical focus",
+  ],
+  suggestions: [
+    "Add a one-line senior-level positioning summary at the top.",
+    "Include a Projects section with 2–3 shipped side-projects and links.",
+    "Front-load Kubernetes and Terraform in the Skills section.",
+    "Replace 'responsible for' with active-voice metrics.",
+    "Add a link to a portfolio or personal site next to your email.",
+  ],
+  summary: "Strong senior full-stack profile with production cloud experience — light on infra keywords and open-source signal that recruiters filter on.",
+  created_at: new Date().toISOString(),
+  resumes: { file_name: "sample-resume.pdf" },
+};
+
 export const getLatestReport = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }) => {
@@ -126,5 +159,5 @@ export const getLatestReport = createServerFn({ method: "GET" })
       .order("created_at", { ascending: false })
       .limit(1)
       .maybeSingle();
-    return data;
+    return data ?? DEMO_ATS_REPORT;
   });

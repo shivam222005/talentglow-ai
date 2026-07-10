@@ -172,6 +172,39 @@ export type Database = {
         }
         Relationships: []
       }
+      learning_roadmaps: {
+        Row: {
+          created_at: string
+          goal: string | null
+          id: string
+          progress: Json
+          title: string
+          updated_at: string
+          user_id: string
+          weeks: Json
+        }
+        Insert: {
+          created_at?: string
+          goal?: string | null
+          id?: string
+          progress?: Json
+          title: string
+          updated_at?: string
+          user_id: string
+          weeks?: Json
+        }
+        Update: {
+          created_at?: string
+          goal?: string | null
+          id?: string
+          progress?: Json
+          title?: string
+          updated_at?: string
+          user_id?: string
+          weeks?: Json
+        }
+        Relationships: []
+      }
       messages: {
         Row: {
           attachment_name: string | null

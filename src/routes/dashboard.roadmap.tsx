@@ -25,7 +25,7 @@ function RoadmapPage() {
 
   const { data: roadmaps = [] as Roadmap[], isLoading } = useQuery<Roadmap[]>({
     queryKey: ["roadmaps"],
-    queryFn: () => listFn() as Promise<Roadmap[]>,
+    queryFn: () => listFn() as unknown as Promise<Roadmap[]>,
   });
 
   const [goal, setGoal] = useState("");

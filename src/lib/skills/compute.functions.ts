@@ -77,10 +77,28 @@ Return strict JSON.`,
     return row;
   });
 
+const DEMO_SKILLS = {
+  id: "demo-skills",
+  is_demo: true,
+  user_id: "demo",
+  frontend: 88,
+  backend: 82,
+  dsa: 74,
+  system_design: 71,
+  database: 78,
+  devops: 62,
+  ai_ml: 58,
+  cloud: 76,
+  composite: 74,
+  strongest: "frontend",
+  weakest: "ai_ml",
+  updated_at: new Date().toISOString(),
+};
+
 export const getSkills = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }) => {
     const { supabase, userId } = context;
     const { data } = await supabase.from("skill_scores").select("*").eq("user_id", userId).maybeSingle();
-    return data;
+    return data ?? DEMO_SKILLS;
   });

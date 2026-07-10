@@ -89,6 +89,40 @@ Cover: strengths, focus area, and one growth suggestion.`,
     return row;
   });
 
+const DEMO_GITHUB_REPORT = {
+  id: "demo-gh",
+  is_demo: true,
+  user_id: "demo",
+  username: "alexrivera",
+  public_repos: 47,
+  followers: 312,
+  total_stars: 284,
+  top_languages: [
+    { l: "TypeScript", v: 18 },
+    { l: "Python", v: 11 },
+    { l: "Go", v: 6 },
+    { l: "Rust", v: 4 },
+    { l: "Java", v: 3 },
+    { l: "Shell", v: 2 },
+  ],
+  top_repos: [
+    { name: "realtime-chat-engine", stars: 128, language: "TypeScript", description: "WebSocket-first chat with presence & typing", url: "https://github.com" },
+    { name: "vector-search-lite", stars: 74, language: "Python", description: "In-process approximate NN search", url: "https://github.com" },
+    { name: "edge-rate-limiter", stars: 52, language: "Go", description: "Token-bucket limiter for Cloudflare Workers", url: "https://github.com" },
+    { name: "prisma-analyzer", stars: 18, language: "TypeScript", description: "Static analysis for N+1 patterns", url: "https://github.com" },
+    { name: "resume-parser", stars: 8, language: "Python", description: "PDF/DOCX to structured JSON", url: "https://github.com" },
+    { name: "dotfiles", stars: 4, language: "Shell", description: "zsh + nvim + tmux setup", url: "https://github.com" },
+  ],
+  commit_activity: ["J","F","M","A","M","J","J","A","S","O","N","D"].map((m, i) => ({
+    m,
+    c: [82, 96, 74, 118, 141, 132, 88, 154, 172, 138, 121, 165][i],
+  })),
+  ai_insights:
+    "Strong full-stack signal with a clear leaning into realtime and infrastructure — the chat engine and rate-limiter show you can design systems, not just wire APIs.\n\nDepth over breadth: TypeScript dominates but Python and Go are used in meaningful, non-trivial projects.\n\nOne growth area: add tests and CI badges to the top three repos — recruiters skim for those signals before opening code.",
+  quality_score: 88,
+  created_at: new Date().toISOString(),
+};
+
 export const getLatestGithub = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }) => {
@@ -100,5 +134,5 @@ export const getLatestGithub = createServerFn({ method: "GET" })
       .order("created_at", { ascending: false })
       .limit(1)
       .maybeSingle();
-    return data;
+    return data ?? DEMO_GITHUB_REPORT;
   });

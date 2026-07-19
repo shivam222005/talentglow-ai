@@ -3,7 +3,7 @@ import { FeaturePage, Card } from "@/components/dashboard/page-scaffold";
 import { Search, Filter } from "lucide-react";
 import meeting from "@/assets/meeting-darmel.asset.json";
 
-export const Route = createFileRoute("/recruiter/candidates")({
+export const Route = createFileRoute("/_authenticated/recruiter/candidates")({
   head: () => ({ meta: [{ title: "Candidate Search — DevScan AI" }] }),
   component: CandidatesPage,
 });

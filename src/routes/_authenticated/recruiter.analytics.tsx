@@ -3,7 +3,7 @@ import { FeaturePage, Card } from "@/components/dashboard/page-scaffold";
 import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, LineChart, Line, AreaChart, Area } from "recharts";
 import team from "@/assets/team-meeting.asset.json";
 
-export const Route = createFileRoute("/recruiter/analytics")({
+export const Route = createFileRoute("/_authenticated/recruiter/analytics")({
   head: () => ({ meta: [{ title: "Hiring Analytics — DevScan AI" }] }),
   component: AnalyticsPage,
 });

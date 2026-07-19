@@ -8,7 +8,7 @@ import { computeSkills, getSkills } from "@/lib/skills/compute.functions";
 import { Loader2, Sparkles } from "lucide-react";
 import { toast } from "sonner";
 
-export const Route = createFileRoute("/dashboard/skills")({
+export const Route = createFileRoute("/_authenticated/dashboard/skills")({
   head: () => ({ meta: [{ title: "Skill Intelligence — DevScan AI" }] }),
   component: SkillsPage,
 });

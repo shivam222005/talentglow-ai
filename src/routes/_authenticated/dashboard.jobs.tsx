@@ -3,7 +3,7 @@ import { FeaturePage, Card } from "@/components/dashboard/page-scaffold";
 import { MapPin, Building2 } from "lucide-react";
 import hr from "@/assets/hr-handshake.asset.json";
 
-export const Route = createFileRoute("/dashboard/jobs")({
+export const Route = createFileRoute("/_authenticated/dashboard/jobs")({
   head: () => ({ meta: [{ title: "Job Matches — DevScan AI" }] }),
   component: JobsPage,
 });

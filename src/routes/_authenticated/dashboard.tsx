@@ -7,7 +7,7 @@ import {
 import { motion } from "framer-motion";
 import { Github, Star, GitPullRequest, FileCheck, Trophy, Flame, Calendar, TrendingUp, ArrowUpRight } from "lucide-react";
 
-export const Route = createFileRoute("/dashboard")({
+export const Route = createFileRoute("/_authenticated/dashboard")({
   ssr: false,
   head: () => ({ meta: [{ title: "Dashboard — DevScan AI" }] }),
   component: StudentDashboard,

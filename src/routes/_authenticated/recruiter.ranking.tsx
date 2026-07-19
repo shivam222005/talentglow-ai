@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { FeaturePage, Card } from "@/components/dashboard/page-scaffold";
 import aiHiring from "@/assets/ai-hiring.asset.json";
 
-export const Route = createFileRoute("/recruiter/ranking")({
+export const Route = createFileRoute("/_authenticated/recruiter/ranking")({
   head: () => ({ meta: [{ title: "Candidate Ranking — DevScan AI" }] }),
   component: RankingPage,
 });

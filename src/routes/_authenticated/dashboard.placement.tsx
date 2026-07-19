@@ -3,7 +3,7 @@ import { FeaturePage, Card, Progress } from "@/components/dashboard/page-scaffol
 import { CheckCircle2, AlertCircle } from "lucide-react";
 import hr from "@/assets/hr-handshake.asset.json";
 
-export const Route = createFileRoute("/dashboard/placement")({
+export const Route = createFileRoute("/_authenticated/dashboard/placement")({
   head: () => ({ meta: [{ title: "Placement Readiness — DevScan AI" }] }),
   component: PlacementPage,
 });

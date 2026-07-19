@@ -4,7 +4,7 @@ import { Sparkles, Send } from "lucide-react";
 import { useState } from "react";
 import aiHiring from "@/assets/ai-hiring.asset.json";
 
-export const Route = createFileRoute("/dashboard/assistant")({
+export const Route = createFileRoute("/_authenticated/dashboard/assistant")({
   head: () => ({ meta: [{ title: "AI Career Assistant — DevScan AI" }] }),
   component: AssistantPage,
 });

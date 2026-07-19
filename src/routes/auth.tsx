@@ -78,11 +78,33 @@ function AuthPage() {
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
+    setInfo(null);
 
     if (!EMAIL_RE.test(email.trim())) {
       setError("Please enter a valid email address.");
       return;
     }
+
+    // FORGOT PASSWORD flow
+    if (mode === "forgot") {
+      setLoading(true);
+      try {
+        const { error: err } = await supabase.auth.resetPasswordForEmail(email.trim(), {
+          redirectTo: `${window.location.origin}/reset-password`,
+        });
+        if (err) throw err;
+        setInfo("If an account exists for that email, a reset link is on its way.");
+        toast.success("Password reset email sent.");
+      } catch (err: unknown) {
+        const msg = err instanceof Error ? err.message : "Could not send reset email.";
+        setError(msg);
+        toast.error(msg);
+      } finally {
+        setLoading(false);
+      }
+      return;
+    }
+
     if (mode === "signup") {
       if (!name.trim()) {
         setError("Please enter your full name.");
@@ -104,13 +126,12 @@ function AuthPage() {
           email: email.trim(),
           password: pw,
           options: {
-            emailRedirectTo: `${window.location.origin}/dashboard`,
+            emailRedirectTo: `${window.location.origin}${dest}`,
             data: { full_name: name.trim() },
           },
         });
         if (err) throw err;
         toast.success("Account created. Welcome to DevScan AI!");
-        // onAuthStateChange will redirect when session arrives
       } else {
         const { error: err } = await supabase.auth.signInWithPassword({
           email: email.trim(),
@@ -121,7 +142,6 @@ function AuthPage() {
       }
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : "Authentication failed.";
-      // Friendlier message for common Supabase errors
       const friendly = /invalid login credentials/i.test(msg)
         ? "Incorrect email or password."
         : /user already registered/i.test(msg)
@@ -140,6 +160,8 @@ function AuthPage() {
     setError(null);
     setOauthLoading("google");
     try {
+      // Remember destination across the OAuth round-trip.
+      try { sessionStorage.setItem(REDIRECT_KEY, dest); } catch { /* ignore */ }
       const result = await lovable.auth.signInWithOAuth("google", {
         redirect_uri: window.location.origin,
         extraParams: { prompt: "select_account" },
@@ -149,7 +171,13 @@ function AuthPage() {
       if (result.redirected) return;
 
       toast.success("Signed in with Google.");
-      navigate({ to: "/dashboard", replace: true });
+      let target = dest;
+      try {
+        const saved = sessionStorage.getItem(REDIRECT_KEY);
+        if (saved) target = safeRedirect(saved);
+        sessionStorage.removeItem(REDIRECT_KEY);
+      } catch { /* ignore */ }
+      navigate({ to: target, replace: true });
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : "Google sign-in failed.";
       setError(msg);

@@ -211,24 +211,26 @@ function AuthPage() {
           <div className="flex flex-1 items-center justify-center py-10">
             <div className="w-full max-w-md">
               {/* Mode toggle */}
-              <div className="mb-8 inline-flex rounded-full bg-[oklch(0.94_0.01_250)] p-1 text-sm font-medium ring-1 ring-[oklch(0.88_0.015_250)]">
-                {(["login", "signup"] as const).map((m) => (
-                  <button
-                    key={m}
-                    onClick={() => setMode(m)}
-                    className={`relative rounded-full px-5 py-1.5 transition-colors ${mode === m ? "text-white" : "text-[oklch(0.45_0.02_260)] hover:text-[oklch(0.25_0.02_260)]"}`}
-                  >
-                    {mode === m && (
-                      <motion.span
-                        layoutId="mode-pill"
-                        className="absolute inset-0 -z-0 rounded-full gradient-blue shadow-md shadow-blue-500/25"
-                        transition={{ type: "spring", stiffness: 400, damping: 30 }}
-                      />
-                    )}
-                    <span className="relative z-10">{m === "login" ? "Sign in" : "Create account"}</span>
-                  </button>
-                ))}
-              </div>
+              {mode !== "forgot" && (
+                <div className="mb-8 inline-flex rounded-full bg-[oklch(0.94_0.01_250)] p-1 text-sm font-medium ring-1 ring-[oklch(0.88_0.015_250)]">
+                  {(["login", "signup"] as const).map((m) => (
+                    <button
+                      key={m}
+                      onClick={() => { setMode(m); setError(null); setInfo(null); }}
+                      className={`relative rounded-full px-5 py-1.5 transition-colors ${mode === m ? "text-white" : "text-[oklch(0.45_0.02_260)] hover:text-[oklch(0.25_0.02_260)]"}`}
+                    >
+                      {mode === m && (
+                        <motion.span
+                          layoutId="mode-pill"
+                          className="absolute inset-0 -z-0 rounded-full gradient-blue shadow-md shadow-blue-500/25"
+                          transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                        />
+                      )}
+                      <span className="relative z-10">{m === "login" ? "Sign in" : "Create account"}</span>
+                    </button>
+                  ))}
+                </div>
+              )}
 
               <AnimatePresence mode="wait">
                 <motion.div

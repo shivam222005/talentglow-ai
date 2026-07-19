@@ -22,7 +22,16 @@ export const Route = createFileRoute("/auth")({
   component: AuthPage,
 });
 
-type Mode = "login" | "signup";
+type Mode = "login" | "signup" | "forgot";
+
+const REDIRECT_KEY = "devscan.postAuthRedirect";
+
+function safeRedirect(target: string | undefined): string {
+  if (!target) return "/dashboard";
+  // Only allow same-origin relative paths.
+  if (target.startsWith("/") && !target.startsWith("//")) return target;
+  return "/dashboard";
+}
 
 function passwordStrength(pw: string) {
   let s = 0;

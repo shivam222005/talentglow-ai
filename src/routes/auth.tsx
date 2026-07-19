@@ -46,6 +46,8 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 function AuthPage() {
   const navigate = useNavigate();
+  const search = useSearch({ from: "/auth" }) as AuthSearch;
+  const dest = safeRedirect(search.redirect);
   const [mode, setMode] = useState<Mode>("login");
   const [show, setShow] = useState(false);
   const [email, setEmail] = useState("");
@@ -55,22 +57,23 @@ function AuthPage() {
   const [loading, setLoading] = useState(false);
   const [oauthLoading, setOauthLoading] = useState<"google" | "github" | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [info, setInfo] = useState<string | null>(null);
   const strength = useMemo(() => passwordStrength(pw), [pw]);
 
-  // If already authenticated, send to dashboard
+  // If already authenticated, send to intended dest
   useEffect(() => {
     let active = true;
     supabase.auth.getSession().then(({ data }) => {
-      if (active && data.session) navigate({ to: "/dashboard", replace: true });
+      if (active && data.session) navigate({ to: dest, replace: true });
     });
     const { data: sub } = supabase.auth.onAuthStateChange((_event, session) => {
-      if (session) navigate({ to: "/dashboard", replace: true });
+      if (session) navigate({ to: dest, replace: true });
     });
     return () => {
       active = false;
       sub.subscription.unsubscribe();
     };
-  }, [navigate]);
+  }, [navigate, dest]);
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();

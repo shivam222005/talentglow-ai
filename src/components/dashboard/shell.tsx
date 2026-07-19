@@ -43,11 +43,21 @@ export function DashboardShell({ role, children }: { role: "student" | "recruite
   const nav = role === "student" ? STUDENT_NAV : RECRUITER_NAV;
   const path = useRouterState({ select: (s) => s.location.pathname });
   const navigate = useNavigate();
+  const qc = useQueryClient();
 
   const handleSignOut = async () => {
-    await supabase.auth.signOut();
-    navigate({ to: "/auth", replace: true });
+    try {
+      await qc.cancelQueries();
+      qc.clear();
+      await supabase.auth.signOut();
+      toast.success("Signed out.");
+      navigate({ to: "/auth", replace: true });
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : "Sign-out failed.";
+      toast.error(msg);
+    }
   };
+
 
   return (
     <div className="min-h-screen bg-background">

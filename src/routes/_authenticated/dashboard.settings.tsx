@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { FeaturePage, Card } from "@/components/dashboard/page-scaffold";
 import handshake from "@/assets/handshake-office.asset.json";
 
-export const Route = createFileRoute("/dashboard/settings")({
+export const Route = createFileRoute("/_authenticated/dashboard/settings")({
   head: () => ({ meta: [{ title: "Profile Settings — DevScan AI" }] }),
   component: SettingsPage,
 });

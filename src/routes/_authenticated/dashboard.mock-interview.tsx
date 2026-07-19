@@ -3,7 +3,7 @@ import { FeaturePage, Card } from "@/components/dashboard/page-scaffold";
 import { Mic, Play } from "lucide-react";
 import meeting from "@/assets/meeting-darmel.asset.json";
 
-export const Route = createFileRoute("/dashboard/mock-interview")({
+export const Route = createFileRoute("/_authenticated/dashboard/mock-interview")({
   head: () => ({ meta: [{ title: "Mock Interview — DevScan AI" }] }),
   component: MockInterview,
 });

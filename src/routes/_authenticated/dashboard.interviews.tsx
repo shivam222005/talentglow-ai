@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { FeaturePage, Card } from "@/components/dashboard/page-scaffold";
 import meeting from "@/assets/meeting-darmel.asset.json";
 
-export const Route = createFileRoute("/dashboard/interviews")({
+export const Route = createFileRoute("/_authenticated/dashboard/interviews")({
   head: () => ({ meta: [{ title: "Interview Tracker — DevScan AI" }] }),
   component: InterviewsPage,
 });

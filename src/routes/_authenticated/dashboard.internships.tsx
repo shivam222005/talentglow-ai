@@ -3,7 +3,7 @@ import { FeaturePage, Card } from "@/components/dashboard/page-scaffold";
 import { GraduationCap } from "lucide-react";
 import team from "@/assets/team-meeting.asset.json";
 
-export const Route = createFileRoute("/dashboard/internships")({
+export const Route = createFileRoute("/_authenticated/dashboard/internships")({
   head: () => ({ meta: [{ title: "Internships — DevScan AI" }] }),
   component: InternsPage,
 });

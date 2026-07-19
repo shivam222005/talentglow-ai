@@ -3,7 +3,7 @@ import { DashboardShell } from "@/components/dashboard/shell";
 import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, RadarChart, Radar, PolarGrid, PolarAngleAxis } from "recharts";
 import { Filter, ArrowUpRight, Search } from "lucide-react";
 
-export const Route = createFileRoute("/recruiter")({
+export const Route = createFileRoute("/_authenticated/recruiter")({
   ssr: false,
   head: () => ({ meta: [{ title: "Recruiter Dashboard — DevScan AI" }] }),
   component: RecruiterDashboard,

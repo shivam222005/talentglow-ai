@@ -11,38 +11,40 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SolutionsRouteImport } from './routes/solutions'
 import { Route as SignupRouteImport } from './routes/signup'
-import { Route as RecruiterRouteImport } from './routes/recruiter'
+import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as McpRouteImport } from './routes/mcp'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as FeaturesRouteImport } from './routes/features'
-import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AboutRouteImport } from './routes/about'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as RecruiterReportsRouteImport } from './routes/recruiter.reports'
-import { Route as RecruiterRankingRouteImport } from './routes/recruiter.ranking'
-import { Route as RecruiterMessagesRouteImport } from './routes/recruiter.messages'
-import { Route as RecruiterCompareRouteImport } from './routes/recruiter.compare'
-import { Route as RecruiterCandidatesRouteImport } from './routes/recruiter.candidates'
-import { Route as RecruiterAnalyticsRouteImport } from './routes/recruiter.analytics'
-import { Route as DashboardSkillsRouteImport } from './routes/dashboard.skills'
-import { Route as DashboardSettingsRouteImport } from './routes/dashboard.settings'
-import { Route as DashboardRoadmapRouteImport } from './routes/dashboard.roadmap'
-import { Route as DashboardResumeBuilderRouteImport } from './routes/dashboard.resume-builder'
-import { Route as DashboardResumeRouteImport } from './routes/dashboard.resume'
-import { Route as DashboardProjectsRouteImport } from './routes/dashboard.projects'
-import { Route as DashboardPlacementRouteImport } from './routes/dashboard.placement'
-import { Route as DashboardMockInterviewRouteImport } from './routes/dashboard.mock-interview'
-import { Route as DashboardMessagesRouteImport } from './routes/dashboard.messages'
-import { Route as DashboardJobsRouteImport } from './routes/dashboard.jobs'
-import { Route as DashboardInterviewsRouteImport } from './routes/dashboard.interviews'
-import { Route as DashboardInternshipsRouteImport } from './routes/dashboard.internships'
-import { Route as DashboardGithubRouteImport } from './routes/dashboard.github'
-import { Route as DashboardAssistantRouteImport } from './routes/dashboard.assistant'
+import { Route as AuthenticatedRecruiterRouteImport } from './routes/_authenticated/recruiter'
+import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as Char91DotwellKnownChar93OauthProtectedResourceRouteImport } from './routes/[.well-known]/oauth-protected-resource'
 import { Route as Char91DotmcpChar93ListToolsRouteImport } from './routes/[.mcp]/list-tools'
+import { Route as AuthenticatedRecruiterReportsRouteImport } from './routes/_authenticated/recruiter.reports'
+import { Route as AuthenticatedRecruiterRankingRouteImport } from './routes/_authenticated/recruiter.ranking'
+import { Route as AuthenticatedRecruiterMessagesRouteImport } from './routes/_authenticated/recruiter.messages'
+import { Route as AuthenticatedRecruiterCompareRouteImport } from './routes/_authenticated/recruiter.compare'
+import { Route as AuthenticatedRecruiterCandidatesRouteImport } from './routes/_authenticated/recruiter.candidates'
+import { Route as AuthenticatedRecruiterAnalyticsRouteImport } from './routes/_authenticated/recruiter.analytics'
+import { Route as AuthenticatedDashboardSkillsRouteImport } from './routes/_authenticated/dashboard.skills'
+import { Route as AuthenticatedDashboardSettingsRouteImport } from './routes/_authenticated/dashboard.settings'
+import { Route as AuthenticatedDashboardRoadmapRouteImport } from './routes/_authenticated/dashboard.roadmap'
+import { Route as AuthenticatedDashboardResumeBuilderRouteImport } from './routes/_authenticated/dashboard.resume-builder'
+import { Route as AuthenticatedDashboardResumeRouteImport } from './routes/_authenticated/dashboard.resume'
+import { Route as AuthenticatedDashboardProjectsRouteImport } from './routes/_authenticated/dashboard.projects'
+import { Route as AuthenticatedDashboardPlacementRouteImport } from './routes/_authenticated/dashboard.placement'
+import { Route as AuthenticatedDashboardMockInterviewRouteImport } from './routes/_authenticated/dashboard.mock-interview'
+import { Route as AuthenticatedDashboardMessagesRouteImport } from './routes/_authenticated/dashboard.messages'
+import { Route as AuthenticatedDashboardJobsRouteImport } from './routes/_authenticated/dashboard.jobs'
+import { Route as AuthenticatedDashboardInterviewsRouteImport } from './routes/_authenticated/dashboard.interviews'
+import { Route as AuthenticatedDashboardInternshipsRouteImport } from './routes/_authenticated/dashboard.internships'
+import { Route as AuthenticatedDashboardGithubRouteImport } from './routes/_authenticated/dashboard.github'
+import { Route as AuthenticatedDashboardAssistantRouteImport } from './routes/_authenticated/dashboard.assistant'
 import { Route as Char91DotmcpChar93InvokeToolToolRouteImport } from './routes/[.mcp]/invoke-tool/$tool'
 
 const SolutionsRoute = SolutionsRouteImport.update({
@@ -55,9 +57,9 @@ const SignupRoute = SignupRouteImport.update({
   path: '/signup',
   getParentRoute: () => rootRouteImport,
 } as any)
-const RecruiterRoute = RecruiterRouteImport.update({
-  id: '/recruiter',
-  path: '/recruiter',
+const ResetPasswordRoute = ResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PricingRoute = PricingRouteImport.update({
@@ -80,11 +82,6 @@ const FeaturesRoute = FeaturesRouteImport.update({
   path: '/features',
   getParentRoute: () => rootRouteImport,
 } as any)
-const DashboardRoute = DashboardRouteImport.update({
-  id: '/dashboard',
-  path: '/dashboard',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const ContactRoute = ContactRouteImport.update({
   id: '/contact',
   path: '/contact',
@@ -100,110 +97,24 @@ const AboutRoute = AboutRouteImport.update({
   path: '/about',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const RecruiterReportsRoute = RecruiterReportsRouteImport.update({
-  id: '/reports',
-  path: '/reports',
-  getParentRoute: () => RecruiterRoute,
+const AuthenticatedRecruiterRoute = AuthenticatedRecruiterRouteImport.update({
+  id: '/recruiter',
+  path: '/recruiter',
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
-const RecruiterRankingRoute = RecruiterRankingRouteImport.update({
-  id: '/ranking',
-  path: '/ranking',
-  getParentRoute: () => RecruiterRoute,
-} as any)
-const RecruiterMessagesRoute = RecruiterMessagesRouteImport.update({
-  id: '/messages',
-  path: '/messages',
-  getParentRoute: () => RecruiterRoute,
-} as any)
-const RecruiterCompareRoute = RecruiterCompareRouteImport.update({
-  id: '/compare',
-  path: '/compare',
-  getParentRoute: () => RecruiterRoute,
-} as any)
-const RecruiterCandidatesRoute = RecruiterCandidatesRouteImport.update({
-  id: '/candidates',
-  path: '/candidates',
-  getParentRoute: () => RecruiterRoute,
-} as any)
-const RecruiterAnalyticsRoute = RecruiterAnalyticsRouteImport.update({
-  id: '/analytics',
-  path: '/analytics',
-  getParentRoute: () => RecruiterRoute,
-} as any)
-const DashboardSkillsRoute = DashboardSkillsRouteImport.update({
-  id: '/skills',
-  path: '/skills',
-  getParentRoute: () => DashboardRoute,
-} as any)
-const DashboardSettingsRoute = DashboardSettingsRouteImport.update({
-  id: '/settings',
-  path: '/settings',
-  getParentRoute: () => DashboardRoute,
-} as any)
-const DashboardRoadmapRoute = DashboardRoadmapRouteImport.update({
-  id: '/roadmap',
-  path: '/roadmap',
-  getParentRoute: () => DashboardRoute,
-} as any)
-const DashboardResumeBuilderRoute = DashboardResumeBuilderRouteImport.update({
-  id: '/resume-builder',
-  path: '/resume-builder',
-  getParentRoute: () => DashboardRoute,
-} as any)
-const DashboardResumeRoute = DashboardResumeRouteImport.update({
-  id: '/resume',
-  path: '/resume',
-  getParentRoute: () => DashboardRoute,
-} as any)
-const DashboardProjectsRoute = DashboardProjectsRouteImport.update({
-  id: '/projects',
-  path: '/projects',
-  getParentRoute: () => DashboardRoute,
-} as any)
-const DashboardPlacementRoute = DashboardPlacementRouteImport.update({
-  id: '/placement',
-  path: '/placement',
-  getParentRoute: () => DashboardRoute,
-} as any)
-const DashboardMockInterviewRoute = DashboardMockInterviewRouteImport.update({
-  id: '/mock-interview',
-  path: '/mock-interview',
-  getParentRoute: () => DashboardRoute,
-} as any)
-const DashboardMessagesRoute = DashboardMessagesRouteImport.update({
-  id: '/messages',
-  path: '/messages',
-  getParentRoute: () => DashboardRoute,
-} as any)
-const DashboardJobsRoute = DashboardJobsRouteImport.update({
-  id: '/jobs',
-  path: '/jobs',
-  getParentRoute: () => DashboardRoute,
-} as any)
-const DashboardInterviewsRoute = DashboardInterviewsRouteImport.update({
-  id: '/interviews',
-  path: '/interviews',
-  getParentRoute: () => DashboardRoute,
-} as any)
-const DashboardInternshipsRoute = DashboardInternshipsRouteImport.update({
-  id: '/internships',
-  path: '/internships',
-  getParentRoute: () => DashboardRoute,
-} as any)
-const DashboardGithubRoute = DashboardGithubRouteImport.update({
-  id: '/github',
-  path: '/github',
-  getParentRoute: () => DashboardRoute,
-} as any)
-const DashboardAssistantRoute = DashboardAssistantRouteImport.update({
-  id: '/assistant',
-  path: '/assistant',
-  getParentRoute: () => DashboardRoute,
+const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const Char91DotwellKnownChar93OauthProtectedResourceRoute =
   Char91DotwellKnownChar93OauthProtectedResourceRouteImport.update({
@@ -217,6 +128,126 @@ const Char91DotmcpChar93ListToolsRoute =
     path: '/.mcp/list-tools',
     getParentRoute: () => rootRouteImport,
   } as any)
+const AuthenticatedRecruiterReportsRoute =
+  AuthenticatedRecruiterReportsRouteImport.update({
+    id: '/reports',
+    path: '/reports',
+    getParentRoute: () => AuthenticatedRecruiterRoute,
+  } as any)
+const AuthenticatedRecruiterRankingRoute =
+  AuthenticatedRecruiterRankingRouteImport.update({
+    id: '/ranking',
+    path: '/ranking',
+    getParentRoute: () => AuthenticatedRecruiterRoute,
+  } as any)
+const AuthenticatedRecruiterMessagesRoute =
+  AuthenticatedRecruiterMessagesRouteImport.update({
+    id: '/messages',
+    path: '/messages',
+    getParentRoute: () => AuthenticatedRecruiterRoute,
+  } as any)
+const AuthenticatedRecruiterCompareRoute =
+  AuthenticatedRecruiterCompareRouteImport.update({
+    id: '/compare',
+    path: '/compare',
+    getParentRoute: () => AuthenticatedRecruiterRoute,
+  } as any)
+const AuthenticatedRecruiterCandidatesRoute =
+  AuthenticatedRecruiterCandidatesRouteImport.update({
+    id: '/candidates',
+    path: '/candidates',
+    getParentRoute: () => AuthenticatedRecruiterRoute,
+  } as any)
+const AuthenticatedRecruiterAnalyticsRoute =
+  AuthenticatedRecruiterAnalyticsRouteImport.update({
+    id: '/analytics',
+    path: '/analytics',
+    getParentRoute: () => AuthenticatedRecruiterRoute,
+  } as any)
+const AuthenticatedDashboardSkillsRoute =
+  AuthenticatedDashboardSkillsRouteImport.update({
+    id: '/skills',
+    path: '/skills',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
+const AuthenticatedDashboardSettingsRoute =
+  AuthenticatedDashboardSettingsRouteImport.update({
+    id: '/settings',
+    path: '/settings',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
+const AuthenticatedDashboardRoadmapRoute =
+  AuthenticatedDashboardRoadmapRouteImport.update({
+    id: '/roadmap',
+    path: '/roadmap',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
+const AuthenticatedDashboardResumeBuilderRoute =
+  AuthenticatedDashboardResumeBuilderRouteImport.update({
+    id: '/resume-builder',
+    path: '/resume-builder',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
+const AuthenticatedDashboardResumeRoute =
+  AuthenticatedDashboardResumeRouteImport.update({
+    id: '/resume',
+    path: '/resume',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
+const AuthenticatedDashboardProjectsRoute =
+  AuthenticatedDashboardProjectsRouteImport.update({
+    id: '/projects',
+    path: '/projects',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
+const AuthenticatedDashboardPlacementRoute =
+  AuthenticatedDashboardPlacementRouteImport.update({
+    id: '/placement',
+    path: '/placement',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
+const AuthenticatedDashboardMockInterviewRoute =
+  AuthenticatedDashboardMockInterviewRouteImport.update({
+    id: '/mock-interview',
+    path: '/mock-interview',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
+const AuthenticatedDashboardMessagesRoute =
+  AuthenticatedDashboardMessagesRouteImport.update({
+    id: '/messages',
+    path: '/messages',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
+const AuthenticatedDashboardJobsRoute =
+  AuthenticatedDashboardJobsRouteImport.update({
+    id: '/jobs',
+    path: '/jobs',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
+const AuthenticatedDashboardInterviewsRoute =
+  AuthenticatedDashboardInterviewsRouteImport.update({
+    id: '/interviews',
+    path: '/interviews',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
+const AuthenticatedDashboardInternshipsRoute =
+  AuthenticatedDashboardInternshipsRouteImport.update({
+    id: '/internships',
+    path: '/internships',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
+const AuthenticatedDashboardGithubRoute =
+  AuthenticatedDashboardGithubRouteImport.update({
+    id: '/github',
+    path: '/github',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
+const AuthenticatedDashboardAssistantRoute =
+  AuthenticatedDashboardAssistantRouteImport.update({
+    id: '/assistant',
+    path: '/assistant',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
 const Char91DotmcpChar93InvokeToolToolRoute =
   Char91DotmcpChar93InvokeToolToolRouteImport.update({
     id: '/.mcp/invoke-tool/$tool',
@@ -229,112 +260,116 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/auth': typeof AuthRoute
   '/contact': typeof ContactRoute
-  '/dashboard': typeof DashboardRouteWithChildren
   '/features': typeof FeaturesRoute
   '/login': typeof LoginRoute
   '/mcp': typeof McpRoute
   '/pricing': typeof PricingRoute
-  '/recruiter': typeof RecruiterRouteWithChildren
+  '/reset-password': typeof ResetPasswordRoute
   '/signup': typeof SignupRoute
   '/solutions': typeof SolutionsRoute
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
-  '/dashboard/assistant': typeof DashboardAssistantRoute
-  '/dashboard/github': typeof DashboardGithubRoute
-  '/dashboard/internships': typeof DashboardInternshipsRoute
-  '/dashboard/interviews': typeof DashboardInterviewsRoute
-  '/dashboard/jobs': typeof DashboardJobsRoute
-  '/dashboard/messages': typeof DashboardMessagesRoute
-  '/dashboard/mock-interview': typeof DashboardMockInterviewRoute
-  '/dashboard/placement': typeof DashboardPlacementRoute
-  '/dashboard/projects': typeof DashboardProjectsRoute
-  '/dashboard/resume': typeof DashboardResumeRoute
-  '/dashboard/resume-builder': typeof DashboardResumeBuilderRoute
-  '/dashboard/roadmap': typeof DashboardRoadmapRoute
-  '/dashboard/settings': typeof DashboardSettingsRoute
-  '/dashboard/skills': typeof DashboardSkillsRoute
-  '/recruiter/analytics': typeof RecruiterAnalyticsRoute
-  '/recruiter/candidates': typeof RecruiterCandidatesRoute
-  '/recruiter/compare': typeof RecruiterCompareRoute
-  '/recruiter/messages': typeof RecruiterMessagesRoute
-  '/recruiter/ranking': typeof RecruiterRankingRoute
-  '/recruiter/reports': typeof RecruiterReportsRoute
+  '/dashboard': typeof AuthenticatedDashboardRouteWithChildren
+  '/recruiter': typeof AuthenticatedRecruiterRouteWithChildren
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
+  '/dashboard/assistant': typeof AuthenticatedDashboardAssistantRoute
+  '/dashboard/github': typeof AuthenticatedDashboardGithubRoute
+  '/dashboard/internships': typeof AuthenticatedDashboardInternshipsRoute
+  '/dashboard/interviews': typeof AuthenticatedDashboardInterviewsRoute
+  '/dashboard/jobs': typeof AuthenticatedDashboardJobsRoute
+  '/dashboard/messages': typeof AuthenticatedDashboardMessagesRoute
+  '/dashboard/mock-interview': typeof AuthenticatedDashboardMockInterviewRoute
+  '/dashboard/placement': typeof AuthenticatedDashboardPlacementRoute
+  '/dashboard/projects': typeof AuthenticatedDashboardProjectsRoute
+  '/dashboard/resume': typeof AuthenticatedDashboardResumeRoute
+  '/dashboard/resume-builder': typeof AuthenticatedDashboardResumeBuilderRoute
+  '/dashboard/roadmap': typeof AuthenticatedDashboardRoadmapRoute
+  '/dashboard/settings': typeof AuthenticatedDashboardSettingsRoute
+  '/dashboard/skills': typeof AuthenticatedDashboardSkillsRoute
+  '/recruiter/analytics': typeof AuthenticatedRecruiterAnalyticsRoute
+  '/recruiter/candidates': typeof AuthenticatedRecruiterCandidatesRoute
+  '/recruiter/compare': typeof AuthenticatedRecruiterCompareRoute
+  '/recruiter/messages': typeof AuthenticatedRecruiterMessagesRoute
+  '/recruiter/ranking': typeof AuthenticatedRecruiterRankingRoute
+  '/recruiter/reports': typeof AuthenticatedRecruiterReportsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/auth': typeof AuthRoute
   '/contact': typeof ContactRoute
-  '/dashboard': typeof DashboardRouteWithChildren
   '/features': typeof FeaturesRoute
   '/login': typeof LoginRoute
   '/mcp': typeof McpRoute
   '/pricing': typeof PricingRoute
-  '/recruiter': typeof RecruiterRouteWithChildren
+  '/reset-password': typeof ResetPasswordRoute
   '/signup': typeof SignupRoute
   '/solutions': typeof SolutionsRoute
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
-  '/dashboard/assistant': typeof DashboardAssistantRoute
-  '/dashboard/github': typeof DashboardGithubRoute
-  '/dashboard/internships': typeof DashboardInternshipsRoute
-  '/dashboard/interviews': typeof DashboardInterviewsRoute
-  '/dashboard/jobs': typeof DashboardJobsRoute
-  '/dashboard/messages': typeof DashboardMessagesRoute
-  '/dashboard/mock-interview': typeof DashboardMockInterviewRoute
-  '/dashboard/placement': typeof DashboardPlacementRoute
-  '/dashboard/projects': typeof DashboardProjectsRoute
-  '/dashboard/resume': typeof DashboardResumeRoute
-  '/dashboard/resume-builder': typeof DashboardResumeBuilderRoute
-  '/dashboard/roadmap': typeof DashboardRoadmapRoute
-  '/dashboard/settings': typeof DashboardSettingsRoute
-  '/dashboard/skills': typeof DashboardSkillsRoute
-  '/recruiter/analytics': typeof RecruiterAnalyticsRoute
-  '/recruiter/candidates': typeof RecruiterCandidatesRoute
-  '/recruiter/compare': typeof RecruiterCompareRoute
-  '/recruiter/messages': typeof RecruiterMessagesRoute
-  '/recruiter/ranking': typeof RecruiterRankingRoute
-  '/recruiter/reports': typeof RecruiterReportsRoute
+  '/dashboard': typeof AuthenticatedDashboardRouteWithChildren
+  '/recruiter': typeof AuthenticatedRecruiterRouteWithChildren
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
+  '/dashboard/assistant': typeof AuthenticatedDashboardAssistantRoute
+  '/dashboard/github': typeof AuthenticatedDashboardGithubRoute
+  '/dashboard/internships': typeof AuthenticatedDashboardInternshipsRoute
+  '/dashboard/interviews': typeof AuthenticatedDashboardInterviewsRoute
+  '/dashboard/jobs': typeof AuthenticatedDashboardJobsRoute
+  '/dashboard/messages': typeof AuthenticatedDashboardMessagesRoute
+  '/dashboard/mock-interview': typeof AuthenticatedDashboardMockInterviewRoute
+  '/dashboard/placement': typeof AuthenticatedDashboardPlacementRoute
+  '/dashboard/projects': typeof AuthenticatedDashboardProjectsRoute
+  '/dashboard/resume': typeof AuthenticatedDashboardResumeRoute
+  '/dashboard/resume-builder': typeof AuthenticatedDashboardResumeBuilderRoute
+  '/dashboard/roadmap': typeof AuthenticatedDashboardRoadmapRoute
+  '/dashboard/settings': typeof AuthenticatedDashboardSettingsRoute
+  '/dashboard/skills': typeof AuthenticatedDashboardSkillsRoute
+  '/recruiter/analytics': typeof AuthenticatedRecruiterAnalyticsRoute
+  '/recruiter/candidates': typeof AuthenticatedRecruiterCandidatesRoute
+  '/recruiter/compare': typeof AuthenticatedRecruiterCompareRoute
+  '/recruiter/messages': typeof AuthenticatedRecruiterMessagesRoute
+  '/recruiter/ranking': typeof AuthenticatedRecruiterRankingRoute
+  '/recruiter/reports': typeof AuthenticatedRecruiterReportsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/about': typeof AboutRoute
   '/auth': typeof AuthRoute
   '/contact': typeof ContactRoute
-  '/dashboard': typeof DashboardRouteWithChildren
   '/features': typeof FeaturesRoute
   '/login': typeof LoginRoute
   '/mcp': typeof McpRoute
   '/pricing': typeof PricingRoute
-  '/recruiter': typeof RecruiterRouteWithChildren
+  '/reset-password': typeof ResetPasswordRoute
   '/signup': typeof SignupRoute
   '/solutions': typeof SolutionsRoute
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
-  '/dashboard/assistant': typeof DashboardAssistantRoute
-  '/dashboard/github': typeof DashboardGithubRoute
-  '/dashboard/internships': typeof DashboardInternshipsRoute
-  '/dashboard/interviews': typeof DashboardInterviewsRoute
-  '/dashboard/jobs': typeof DashboardJobsRoute
-  '/dashboard/messages': typeof DashboardMessagesRoute
-  '/dashboard/mock-interview': typeof DashboardMockInterviewRoute
-  '/dashboard/placement': typeof DashboardPlacementRoute
-  '/dashboard/projects': typeof DashboardProjectsRoute
-  '/dashboard/resume': typeof DashboardResumeRoute
-  '/dashboard/resume-builder': typeof DashboardResumeBuilderRoute
-  '/dashboard/roadmap': typeof DashboardRoadmapRoute
-  '/dashboard/settings': typeof DashboardSettingsRoute
-  '/dashboard/skills': typeof DashboardSkillsRoute
-  '/recruiter/analytics': typeof RecruiterAnalyticsRoute
-  '/recruiter/candidates': typeof RecruiterCandidatesRoute
-  '/recruiter/compare': typeof RecruiterCompareRoute
-  '/recruiter/messages': typeof RecruiterMessagesRoute
-  '/recruiter/ranking': typeof RecruiterRankingRoute
-  '/recruiter/reports': typeof RecruiterReportsRoute
+  '/_authenticated/dashboard': typeof AuthenticatedDashboardRouteWithChildren
+  '/_authenticated/recruiter': typeof AuthenticatedRecruiterRouteWithChildren
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
+  '/_authenticated/dashboard/assistant': typeof AuthenticatedDashboardAssistantRoute
+  '/_authenticated/dashboard/github': typeof AuthenticatedDashboardGithubRoute
+  '/_authenticated/dashboard/internships': typeof AuthenticatedDashboardInternshipsRoute
+  '/_authenticated/dashboard/interviews': typeof AuthenticatedDashboardInterviewsRoute
+  '/_authenticated/dashboard/jobs': typeof AuthenticatedDashboardJobsRoute
+  '/_authenticated/dashboard/messages': typeof AuthenticatedDashboardMessagesRoute
+  '/_authenticated/dashboard/mock-interview': typeof AuthenticatedDashboardMockInterviewRoute
+  '/_authenticated/dashboard/placement': typeof AuthenticatedDashboardPlacementRoute
+  '/_authenticated/dashboard/projects': typeof AuthenticatedDashboardProjectsRoute
+  '/_authenticated/dashboard/resume': typeof AuthenticatedDashboardResumeRoute
+  '/_authenticated/dashboard/resume-builder': typeof AuthenticatedDashboardResumeBuilderRoute
+  '/_authenticated/dashboard/roadmap': typeof AuthenticatedDashboardRoadmapRoute
+  '/_authenticated/dashboard/settings': typeof AuthenticatedDashboardSettingsRoute
+  '/_authenticated/dashboard/skills': typeof AuthenticatedDashboardSkillsRoute
+  '/_authenticated/recruiter/analytics': typeof AuthenticatedRecruiterAnalyticsRoute
+  '/_authenticated/recruiter/candidates': typeof AuthenticatedRecruiterCandidatesRoute
+  '/_authenticated/recruiter/compare': typeof AuthenticatedRecruiterCompareRoute
+  '/_authenticated/recruiter/messages': typeof AuthenticatedRecruiterMessagesRoute
+  '/_authenticated/recruiter/ranking': typeof AuthenticatedRecruiterRankingRoute
+  '/_authenticated/recruiter/reports': typeof AuthenticatedRecruiterReportsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -343,16 +378,18 @@ export interface FileRouteTypes {
     | '/about'
     | '/auth'
     | '/contact'
-    | '/dashboard'
     | '/features'
     | '/login'
     | '/mcp'
     | '/pricing'
-    | '/recruiter'
+    | '/reset-password'
     | '/signup'
     | '/solutions'
     | '/.mcp/list-tools'
     | '/.well-known/oauth-protected-resource'
+    | '/dashboard'
+    | '/recruiter'
+    | '/.mcp/invoke-tool/$tool'
     | '/dashboard/assistant'
     | '/dashboard/github'
     | '/dashboard/internships'
@@ -373,23 +410,24 @@ export interface FileRouteTypes {
     | '/recruiter/messages'
     | '/recruiter/ranking'
     | '/recruiter/reports'
-    | '/.mcp/invoke-tool/$tool'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/about'
     | '/auth'
     | '/contact'
-    | '/dashboard'
     | '/features'
     | '/login'
     | '/mcp'
     | '/pricing'
-    | '/recruiter'
+    | '/reset-password'
     | '/signup'
     | '/solutions'
     | '/.mcp/list-tools'
     | '/.well-known/oauth-protected-resource'
+    | '/dashboard'
+    | '/recruiter'
+    | '/.mcp/invoke-tool/$tool'
     | '/dashboard/assistant'
     | '/dashboard/github'
     | '/dashboard/internships'
@@ -410,57 +448,58 @@ export interface FileRouteTypes {
     | '/recruiter/messages'
     | '/recruiter/ranking'
     | '/recruiter/reports'
-    | '/.mcp/invoke-tool/$tool'
   id:
     | '__root__'
     | '/'
+    | '/_authenticated'
     | '/about'
     | '/auth'
     | '/contact'
-    | '/dashboard'
     | '/features'
     | '/login'
     | '/mcp'
     | '/pricing'
-    | '/recruiter'
+    | '/reset-password'
     | '/signup'
     | '/solutions'
     | '/.mcp/list-tools'
     | '/.well-known/oauth-protected-resource'
-    | '/dashboard/assistant'
-    | '/dashboard/github'
-    | '/dashboard/internships'
-    | '/dashboard/interviews'
-    | '/dashboard/jobs'
-    | '/dashboard/messages'
-    | '/dashboard/mock-interview'
-    | '/dashboard/placement'
-    | '/dashboard/projects'
-    | '/dashboard/resume'
-    | '/dashboard/resume-builder'
-    | '/dashboard/roadmap'
-    | '/dashboard/settings'
-    | '/dashboard/skills'
-    | '/recruiter/analytics'
-    | '/recruiter/candidates'
-    | '/recruiter/compare'
-    | '/recruiter/messages'
-    | '/recruiter/ranking'
-    | '/recruiter/reports'
+    | '/_authenticated/dashboard'
+    | '/_authenticated/recruiter'
     | '/.mcp/invoke-tool/$tool'
+    | '/_authenticated/dashboard/assistant'
+    | '/_authenticated/dashboard/github'
+    | '/_authenticated/dashboard/internships'
+    | '/_authenticated/dashboard/interviews'
+    | '/_authenticated/dashboard/jobs'
+    | '/_authenticated/dashboard/messages'
+    | '/_authenticated/dashboard/mock-interview'
+    | '/_authenticated/dashboard/placement'
+    | '/_authenticated/dashboard/projects'
+    | '/_authenticated/dashboard/resume'
+    | '/_authenticated/dashboard/resume-builder'
+    | '/_authenticated/dashboard/roadmap'
+    | '/_authenticated/dashboard/settings'
+    | '/_authenticated/dashboard/skills'
+    | '/_authenticated/recruiter/analytics'
+    | '/_authenticated/recruiter/candidates'
+    | '/_authenticated/recruiter/compare'
+    | '/_authenticated/recruiter/messages'
+    | '/_authenticated/recruiter/ranking'
+    | '/_authenticated/recruiter/reports'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AboutRoute: typeof AboutRoute
   AuthRoute: typeof AuthRoute
   ContactRoute: typeof ContactRoute
-  DashboardRoute: typeof DashboardRouteWithChildren
   FeaturesRoute: typeof FeaturesRoute
   LoginRoute: typeof LoginRoute
   McpRoute: typeof McpRoute
   PricingRoute: typeof PricingRoute
-  RecruiterRoute: typeof RecruiterRouteWithChildren
+  ResetPasswordRoute: typeof ResetPasswordRoute
   SignupRoute: typeof SignupRoute
   SolutionsRoute: typeof SolutionsRoute
   Char91DotmcpChar93ListToolsRoute: typeof Char91DotmcpChar93ListToolsRoute
@@ -484,11 +523,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SignupRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/recruiter': {
-      id: '/recruiter'
-      path: '/recruiter'
-      fullPath: '/recruiter'
-      preLoaderRoute: typeof RecruiterRouteImport
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/pricing': {
@@ -519,13 +558,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FeaturesRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/dashboard': {
-      id: '/dashboard'
-      path: '/dashboard'
-      fullPath: '/dashboard'
-      preLoaderRoute: typeof DashboardRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/contact': {
       id: '/contact'
       path: '/contact'
@@ -547,6 +579,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AboutRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -554,145 +593,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/recruiter/reports': {
-      id: '/recruiter/reports'
-      path: '/reports'
-      fullPath: '/recruiter/reports'
-      preLoaderRoute: typeof RecruiterReportsRouteImport
-      parentRoute: typeof RecruiterRoute
+    '/_authenticated/recruiter': {
+      id: '/_authenticated/recruiter'
+      path: '/recruiter'
+      fullPath: '/recruiter'
+      preLoaderRoute: typeof AuthenticatedRecruiterRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/recruiter/ranking': {
-      id: '/recruiter/ranking'
-      path: '/ranking'
-      fullPath: '/recruiter/ranking'
-      preLoaderRoute: typeof RecruiterRankingRouteImport
-      parentRoute: typeof RecruiterRoute
-    }
-    '/recruiter/messages': {
-      id: '/recruiter/messages'
-      path: '/messages'
-      fullPath: '/recruiter/messages'
-      preLoaderRoute: typeof RecruiterMessagesRouteImport
-      parentRoute: typeof RecruiterRoute
-    }
-    '/recruiter/compare': {
-      id: '/recruiter/compare'
-      path: '/compare'
-      fullPath: '/recruiter/compare'
-      preLoaderRoute: typeof RecruiterCompareRouteImport
-      parentRoute: typeof RecruiterRoute
-    }
-    '/recruiter/candidates': {
-      id: '/recruiter/candidates'
-      path: '/candidates'
-      fullPath: '/recruiter/candidates'
-      preLoaderRoute: typeof RecruiterCandidatesRouteImport
-      parentRoute: typeof RecruiterRoute
-    }
-    '/recruiter/analytics': {
-      id: '/recruiter/analytics'
-      path: '/analytics'
-      fullPath: '/recruiter/analytics'
-      preLoaderRoute: typeof RecruiterAnalyticsRouteImport
-      parentRoute: typeof RecruiterRoute
-    }
-    '/dashboard/skills': {
-      id: '/dashboard/skills'
-      path: '/skills'
-      fullPath: '/dashboard/skills'
-      preLoaderRoute: typeof DashboardSkillsRouteImport
-      parentRoute: typeof DashboardRoute
-    }
-    '/dashboard/settings': {
-      id: '/dashboard/settings'
-      path: '/settings'
-      fullPath: '/dashboard/settings'
-      preLoaderRoute: typeof DashboardSettingsRouteImport
-      parentRoute: typeof DashboardRoute
-    }
-    '/dashboard/roadmap': {
-      id: '/dashboard/roadmap'
-      path: '/roadmap'
-      fullPath: '/dashboard/roadmap'
-      preLoaderRoute: typeof DashboardRoadmapRouteImport
-      parentRoute: typeof DashboardRoute
-    }
-    '/dashboard/resume-builder': {
-      id: '/dashboard/resume-builder'
-      path: '/resume-builder'
-      fullPath: '/dashboard/resume-builder'
-      preLoaderRoute: typeof DashboardResumeBuilderRouteImport
-      parentRoute: typeof DashboardRoute
-    }
-    '/dashboard/resume': {
-      id: '/dashboard/resume'
-      path: '/resume'
-      fullPath: '/dashboard/resume'
-      preLoaderRoute: typeof DashboardResumeRouteImport
-      parentRoute: typeof DashboardRoute
-    }
-    '/dashboard/projects': {
-      id: '/dashboard/projects'
-      path: '/projects'
-      fullPath: '/dashboard/projects'
-      preLoaderRoute: typeof DashboardProjectsRouteImport
-      parentRoute: typeof DashboardRoute
-    }
-    '/dashboard/placement': {
-      id: '/dashboard/placement'
-      path: '/placement'
-      fullPath: '/dashboard/placement'
-      preLoaderRoute: typeof DashboardPlacementRouteImport
-      parentRoute: typeof DashboardRoute
-    }
-    '/dashboard/mock-interview': {
-      id: '/dashboard/mock-interview'
-      path: '/mock-interview'
-      fullPath: '/dashboard/mock-interview'
-      preLoaderRoute: typeof DashboardMockInterviewRouteImport
-      parentRoute: typeof DashboardRoute
-    }
-    '/dashboard/messages': {
-      id: '/dashboard/messages'
-      path: '/messages'
-      fullPath: '/dashboard/messages'
-      preLoaderRoute: typeof DashboardMessagesRouteImport
-      parentRoute: typeof DashboardRoute
-    }
-    '/dashboard/jobs': {
-      id: '/dashboard/jobs'
-      path: '/jobs'
-      fullPath: '/dashboard/jobs'
-      preLoaderRoute: typeof DashboardJobsRouteImport
-      parentRoute: typeof DashboardRoute
-    }
-    '/dashboard/interviews': {
-      id: '/dashboard/interviews'
-      path: '/interviews'
-      fullPath: '/dashboard/interviews'
-      preLoaderRoute: typeof DashboardInterviewsRouteImport
-      parentRoute: typeof DashboardRoute
-    }
-    '/dashboard/internships': {
-      id: '/dashboard/internships'
-      path: '/internships'
-      fullPath: '/dashboard/internships'
-      preLoaderRoute: typeof DashboardInternshipsRouteImport
-      parentRoute: typeof DashboardRoute
-    }
-    '/dashboard/github': {
-      id: '/dashboard/github'
-      path: '/github'
-      fullPath: '/dashboard/github'
-      preLoaderRoute: typeof DashboardGithubRouteImport
-      parentRoute: typeof DashboardRoute
-    }
-    '/dashboard/assistant': {
-      id: '/dashboard/assistant'
-      path: '/assistant'
-      fullPath: '/dashboard/assistant'
-      preLoaderRoute: typeof DashboardAssistantRouteImport
-      parentRoute: typeof DashboardRoute
+    '/_authenticated/dashboard': {
+      id: '/_authenticated/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof AuthenticatedDashboardRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
     '/.well-known/oauth-protected-resource': {
       id: '/.well-known/oauth-protected-resource'
@@ -708,6 +621,146 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof Char91DotmcpChar93ListToolsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/recruiter/reports': {
+      id: '/_authenticated/recruiter/reports'
+      path: '/reports'
+      fullPath: '/recruiter/reports'
+      preLoaderRoute: typeof AuthenticatedRecruiterReportsRouteImport
+      parentRoute: typeof AuthenticatedRecruiterRoute
+    }
+    '/_authenticated/recruiter/ranking': {
+      id: '/_authenticated/recruiter/ranking'
+      path: '/ranking'
+      fullPath: '/recruiter/ranking'
+      preLoaderRoute: typeof AuthenticatedRecruiterRankingRouteImport
+      parentRoute: typeof AuthenticatedRecruiterRoute
+    }
+    '/_authenticated/recruiter/messages': {
+      id: '/_authenticated/recruiter/messages'
+      path: '/messages'
+      fullPath: '/recruiter/messages'
+      preLoaderRoute: typeof AuthenticatedRecruiterMessagesRouteImport
+      parentRoute: typeof AuthenticatedRecruiterRoute
+    }
+    '/_authenticated/recruiter/compare': {
+      id: '/_authenticated/recruiter/compare'
+      path: '/compare'
+      fullPath: '/recruiter/compare'
+      preLoaderRoute: typeof AuthenticatedRecruiterCompareRouteImport
+      parentRoute: typeof AuthenticatedRecruiterRoute
+    }
+    '/_authenticated/recruiter/candidates': {
+      id: '/_authenticated/recruiter/candidates'
+      path: '/candidates'
+      fullPath: '/recruiter/candidates'
+      preLoaderRoute: typeof AuthenticatedRecruiterCandidatesRouteImport
+      parentRoute: typeof AuthenticatedRecruiterRoute
+    }
+    '/_authenticated/recruiter/analytics': {
+      id: '/_authenticated/recruiter/analytics'
+      path: '/analytics'
+      fullPath: '/recruiter/analytics'
+      preLoaderRoute: typeof AuthenticatedRecruiterAnalyticsRouteImport
+      parentRoute: typeof AuthenticatedRecruiterRoute
+    }
+    '/_authenticated/dashboard/skills': {
+      id: '/_authenticated/dashboard/skills'
+      path: '/skills'
+      fullPath: '/dashboard/skills'
+      preLoaderRoute: typeof AuthenticatedDashboardSkillsRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
+    '/_authenticated/dashboard/settings': {
+      id: '/_authenticated/dashboard/settings'
+      path: '/settings'
+      fullPath: '/dashboard/settings'
+      preLoaderRoute: typeof AuthenticatedDashboardSettingsRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
+    '/_authenticated/dashboard/roadmap': {
+      id: '/_authenticated/dashboard/roadmap'
+      path: '/roadmap'
+      fullPath: '/dashboard/roadmap'
+      preLoaderRoute: typeof AuthenticatedDashboardRoadmapRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
+    '/_authenticated/dashboard/resume-builder': {
+      id: '/_authenticated/dashboard/resume-builder'
+      path: '/resume-builder'
+      fullPath: '/dashboard/resume-builder'
+      preLoaderRoute: typeof AuthenticatedDashboardResumeBuilderRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
+    '/_authenticated/dashboard/resume': {
+      id: '/_authenticated/dashboard/resume'
+      path: '/resume'
+      fullPath: '/dashboard/resume'
+      preLoaderRoute: typeof AuthenticatedDashboardResumeRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
+    '/_authenticated/dashboard/projects': {
+      id: '/_authenticated/dashboard/projects'
+      path: '/projects'
+      fullPath: '/dashboard/projects'
+      preLoaderRoute: typeof AuthenticatedDashboardProjectsRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
+    '/_authenticated/dashboard/placement': {
+      id: '/_authenticated/dashboard/placement'
+      path: '/placement'
+      fullPath: '/dashboard/placement'
+      preLoaderRoute: typeof AuthenticatedDashboardPlacementRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
+    '/_authenticated/dashboard/mock-interview': {
+      id: '/_authenticated/dashboard/mock-interview'
+      path: '/mock-interview'
+      fullPath: '/dashboard/mock-interview'
+      preLoaderRoute: typeof AuthenticatedDashboardMockInterviewRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
+    '/_authenticated/dashboard/messages': {
+      id: '/_authenticated/dashboard/messages'
+      path: '/messages'
+      fullPath: '/dashboard/messages'
+      preLoaderRoute: typeof AuthenticatedDashboardMessagesRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
+    '/_authenticated/dashboard/jobs': {
+      id: '/_authenticated/dashboard/jobs'
+      path: '/jobs'
+      fullPath: '/dashboard/jobs'
+      preLoaderRoute: typeof AuthenticatedDashboardJobsRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
+    '/_authenticated/dashboard/interviews': {
+      id: '/_authenticated/dashboard/interviews'
+      path: '/interviews'
+      fullPath: '/dashboard/interviews'
+      preLoaderRoute: typeof AuthenticatedDashboardInterviewsRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
+    '/_authenticated/dashboard/internships': {
+      id: '/_authenticated/dashboard/internships'
+      path: '/internships'
+      fullPath: '/dashboard/internships'
+      preLoaderRoute: typeof AuthenticatedDashboardInternshipsRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
+    '/_authenticated/dashboard/github': {
+      id: '/_authenticated/dashboard/github'
+      path: '/github'
+      fullPath: '/dashboard/github'
+      preLoaderRoute: typeof AuthenticatedDashboardGithubRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
+    '/_authenticated/dashboard/assistant': {
+      id: '/_authenticated/dashboard/assistant'
+      path: '/assistant'
+      fullPath: '/dashboard/assistant'
+      preLoaderRoute: typeof AuthenticatedDashboardAssistantRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
     '/.mcp/invoke-tool/$tool': {
       id: '/.mcp/invoke-tool/$tool'
       path: '/.mcp/invoke-tool/$tool'
@@ -718,77 +771,99 @@ declare module '@tanstack/react-router' {
   }
 }
 
-interface DashboardRouteChildren {
-  DashboardAssistantRoute: typeof DashboardAssistantRoute
-  DashboardGithubRoute: typeof DashboardGithubRoute
-  DashboardInternshipsRoute: typeof DashboardInternshipsRoute
-  DashboardInterviewsRoute: typeof DashboardInterviewsRoute
-  DashboardJobsRoute: typeof DashboardJobsRoute
-  DashboardMessagesRoute: typeof DashboardMessagesRoute
-  DashboardMockInterviewRoute: typeof DashboardMockInterviewRoute
-  DashboardPlacementRoute: typeof DashboardPlacementRoute
-  DashboardProjectsRoute: typeof DashboardProjectsRoute
-  DashboardResumeRoute: typeof DashboardResumeRoute
-  DashboardResumeBuilderRoute: typeof DashboardResumeBuilderRoute
-  DashboardRoadmapRoute: typeof DashboardRoadmapRoute
-  DashboardSettingsRoute: typeof DashboardSettingsRoute
-  DashboardSkillsRoute: typeof DashboardSkillsRoute
+interface AuthenticatedDashboardRouteChildren {
+  AuthenticatedDashboardAssistantRoute: typeof AuthenticatedDashboardAssistantRoute
+  AuthenticatedDashboardGithubRoute: typeof AuthenticatedDashboardGithubRoute
+  AuthenticatedDashboardInternshipsRoute: typeof AuthenticatedDashboardInternshipsRoute
+  AuthenticatedDashboardInterviewsRoute: typeof AuthenticatedDashboardInterviewsRoute
+  AuthenticatedDashboardJobsRoute: typeof AuthenticatedDashboardJobsRoute
+  AuthenticatedDashboardMessagesRoute: typeof AuthenticatedDashboardMessagesRoute
+  AuthenticatedDashboardMockInterviewRoute: typeof AuthenticatedDashboardMockInterviewRoute
+  AuthenticatedDashboardPlacementRoute: typeof AuthenticatedDashboardPlacementRoute
+  AuthenticatedDashboardProjectsRoute: typeof AuthenticatedDashboardProjectsRoute
+  AuthenticatedDashboardResumeRoute: typeof AuthenticatedDashboardResumeRoute
+  AuthenticatedDashboardResumeBuilderRoute: typeof AuthenticatedDashboardResumeBuilderRoute
+  AuthenticatedDashboardRoadmapRoute: typeof AuthenticatedDashboardRoadmapRoute
+  AuthenticatedDashboardSettingsRoute: typeof AuthenticatedDashboardSettingsRoute
+  AuthenticatedDashboardSkillsRoute: typeof AuthenticatedDashboardSkillsRoute
 }
 
-const DashboardRouteChildren: DashboardRouteChildren = {
-  DashboardAssistantRoute: DashboardAssistantRoute,
-  DashboardGithubRoute: DashboardGithubRoute,
-  DashboardInternshipsRoute: DashboardInternshipsRoute,
-  DashboardInterviewsRoute: DashboardInterviewsRoute,
-  DashboardJobsRoute: DashboardJobsRoute,
-  DashboardMessagesRoute: DashboardMessagesRoute,
-  DashboardMockInterviewRoute: DashboardMockInterviewRoute,
-  DashboardPlacementRoute: DashboardPlacementRoute,
-  DashboardProjectsRoute: DashboardProjectsRoute,
-  DashboardResumeRoute: DashboardResumeRoute,
-  DashboardResumeBuilderRoute: DashboardResumeBuilderRoute,
-  DashboardRoadmapRoute: DashboardRoadmapRoute,
-  DashboardSettingsRoute: DashboardSettingsRoute,
-  DashboardSkillsRoute: DashboardSkillsRoute,
+const AuthenticatedDashboardRouteChildren: AuthenticatedDashboardRouteChildren =
+  {
+    AuthenticatedDashboardAssistantRoute: AuthenticatedDashboardAssistantRoute,
+    AuthenticatedDashboardGithubRoute: AuthenticatedDashboardGithubRoute,
+    AuthenticatedDashboardInternshipsRoute:
+      AuthenticatedDashboardInternshipsRoute,
+    AuthenticatedDashboardInterviewsRoute:
+      AuthenticatedDashboardInterviewsRoute,
+    AuthenticatedDashboardJobsRoute: AuthenticatedDashboardJobsRoute,
+    AuthenticatedDashboardMessagesRoute: AuthenticatedDashboardMessagesRoute,
+    AuthenticatedDashboardMockInterviewRoute:
+      AuthenticatedDashboardMockInterviewRoute,
+    AuthenticatedDashboardPlacementRoute: AuthenticatedDashboardPlacementRoute,
+    AuthenticatedDashboardProjectsRoute: AuthenticatedDashboardProjectsRoute,
+    AuthenticatedDashboardResumeRoute: AuthenticatedDashboardResumeRoute,
+    AuthenticatedDashboardResumeBuilderRoute:
+      AuthenticatedDashboardResumeBuilderRoute,
+    AuthenticatedDashboardRoadmapRoute: AuthenticatedDashboardRoadmapRoute,
+    AuthenticatedDashboardSettingsRoute: AuthenticatedDashboardSettingsRoute,
+    AuthenticatedDashboardSkillsRoute: AuthenticatedDashboardSkillsRoute,
+  }
+
+const AuthenticatedDashboardRouteWithChildren =
+  AuthenticatedDashboardRoute._addFileChildren(
+    AuthenticatedDashboardRouteChildren,
+  )
+
+interface AuthenticatedRecruiterRouteChildren {
+  AuthenticatedRecruiterAnalyticsRoute: typeof AuthenticatedRecruiterAnalyticsRoute
+  AuthenticatedRecruiterCandidatesRoute: typeof AuthenticatedRecruiterCandidatesRoute
+  AuthenticatedRecruiterCompareRoute: typeof AuthenticatedRecruiterCompareRoute
+  AuthenticatedRecruiterMessagesRoute: typeof AuthenticatedRecruiterMessagesRoute
+  AuthenticatedRecruiterRankingRoute: typeof AuthenticatedRecruiterRankingRoute
+  AuthenticatedRecruiterReportsRoute: typeof AuthenticatedRecruiterReportsRoute
 }
 
-const DashboardRouteWithChildren = DashboardRoute._addFileChildren(
-  DashboardRouteChildren,
-)
+const AuthenticatedRecruiterRouteChildren: AuthenticatedRecruiterRouteChildren =
+  {
+    AuthenticatedRecruiterAnalyticsRoute: AuthenticatedRecruiterAnalyticsRoute,
+    AuthenticatedRecruiterCandidatesRoute:
+      AuthenticatedRecruiterCandidatesRoute,
+    AuthenticatedRecruiterCompareRoute: AuthenticatedRecruiterCompareRoute,
+    AuthenticatedRecruiterMessagesRoute: AuthenticatedRecruiterMessagesRoute,
+    AuthenticatedRecruiterRankingRoute: AuthenticatedRecruiterRankingRoute,
+    AuthenticatedRecruiterReportsRoute: AuthenticatedRecruiterReportsRoute,
+  }
 
-interface RecruiterRouteChildren {
-  RecruiterAnalyticsRoute: typeof RecruiterAnalyticsRoute
-  RecruiterCandidatesRoute: typeof RecruiterCandidatesRoute
-  RecruiterCompareRoute: typeof RecruiterCompareRoute
-  RecruiterMessagesRoute: typeof RecruiterMessagesRoute
-  RecruiterRankingRoute: typeof RecruiterRankingRoute
-  RecruiterReportsRoute: typeof RecruiterReportsRoute
+const AuthenticatedRecruiterRouteWithChildren =
+  AuthenticatedRecruiterRoute._addFileChildren(
+    AuthenticatedRecruiterRouteChildren,
+  )
+
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRouteWithChildren
+  AuthenticatedRecruiterRoute: typeof AuthenticatedRecruiterRouteWithChildren
 }
 
-const RecruiterRouteChildren: RecruiterRouteChildren = {
-  RecruiterAnalyticsRoute: RecruiterAnalyticsRoute,
-  RecruiterCandidatesRoute: RecruiterCandidatesRoute,
-  RecruiterCompareRoute: RecruiterCompareRoute,
-  RecruiterMessagesRoute: RecruiterMessagesRoute,
-  RecruiterRankingRoute: RecruiterRankingRoute,
-  RecruiterReportsRoute: RecruiterReportsRoute,
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedDashboardRoute: AuthenticatedDashboardRouteWithChildren,
+  AuthenticatedRecruiterRoute: AuthenticatedRecruiterRouteWithChildren,
 }
 
-const RecruiterRouteWithChildren = RecruiterRoute._addFileChildren(
-  RecruiterRouteChildren,
-)
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AboutRoute: AboutRoute,
   AuthRoute: AuthRoute,
   ContactRoute: ContactRoute,
-  DashboardRoute: DashboardRouteWithChildren,
   FeaturesRoute: FeaturesRoute,
   LoginRoute: LoginRoute,
   McpRoute: McpRoute,
   PricingRoute: PricingRoute,
-  RecruiterRoute: RecruiterRouteWithChildren,
+  ResetPasswordRoute: ResetPasswordRoute,
   SignupRoute: SignupRoute,
   SolutionsRoute: SolutionsRoute,
   Char91DotmcpChar93ListToolsRoute: Char91DotmcpChar93ListToolsRoute,

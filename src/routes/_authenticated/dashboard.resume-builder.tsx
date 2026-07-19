@@ -8,7 +8,7 @@ import { useState } from "react";
 import { generateResume } from "@/lib/resume/build.functions";
 import { toast } from "sonner";
 
-export const Route = createFileRoute("/dashboard/resume-builder")({
+export const Route = createFileRoute("/_authenticated/dashboard/resume-builder")({
   head: () => ({ meta: [{ title: "Resume Builder — DevScan AI" }] }),
   component: ResumeBuilder,
 });

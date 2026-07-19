@@ -8,7 +8,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { Loader2, Trash2, ExternalLink } from "lucide-react";
 
-export const Route = createFileRoute("/dashboard/projects")({
+export const Route = createFileRoute("/_authenticated/dashboard/projects")({
   head: () => ({ meta: [{ title: "Project Analyzer — DevScan AI" }] }),
   component: ProjectsPage,
 });

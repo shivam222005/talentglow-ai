@@ -3,7 +3,7 @@ import { FeaturePage, Card } from "@/components/dashboard/page-scaffold";
 import { ResponsiveContainer, RadarChart, PolarGrid, PolarAngleAxis, Radar, Legend } from "recharts";
 import handshake from "@/assets/handshake-office.asset.json";
 
-export const Route = createFileRoute("/recruiter/compare")({
+export const Route = createFileRoute("/_authenticated/recruiter/compare")({
   head: () => ({ meta: [{ title: "Candidate Comparison — DevScan AI" }] }),
   component: ComparePage,
 });

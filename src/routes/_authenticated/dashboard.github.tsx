@@ -9,7 +9,7 @@ import { Loader2, Github, Sparkles } from "lucide-react";
 import { analyzeGithub, getLatestGithub } from "@/lib/github/analyze.functions";
 import { toast } from "sonner";
 
-export const Route = createFileRoute("/dashboard/github")({
+export const Route = createFileRoute("/_authenticated/dashboard/github")({
   head: () => ({ meta: [{ title: "GitHub Intelligence — DevScan AI" }] }),
   component: GitHubPage,
 });

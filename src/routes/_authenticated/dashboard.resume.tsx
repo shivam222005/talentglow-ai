@@ -10,7 +10,7 @@ import { extractResumeText } from "@/lib/resume/parse-client";
 import { analyzeResume, saveResumeMeta, getLatestReport } from "@/lib/resume/analyze.functions";
 import { toast } from "sonner";
 
-export const Route = createFileRoute("/dashboard/resume")({
+export const Route = createFileRoute("/_authenticated/dashboard/resume")({
   head: () => ({ meta: [{ title: "Resume Analyzer — DevScan AI" }] }),
   component: ResumePage,
 });

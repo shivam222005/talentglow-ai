@@ -3,7 +3,7 @@ import { FeaturePage, Card } from "@/components/dashboard/page-scaffold";
 import { FileDown, FileSpreadsheet, FileText } from "lucide-react";
 import clipboard from "@/assets/clipboard-handoff.asset.json";
 
-export const Route = createFileRoute("/recruiter/reports")({
+export const Route = createFileRoute("/_authenticated/recruiter/reports")({
   head: () => ({ meta: [{ title: "Reports & Exports — DevScan AI" }] }),
   component: ReportsPage,
 });

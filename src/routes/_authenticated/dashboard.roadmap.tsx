@@ -8,7 +8,7 @@ import { deleteRoadmap, generateRoadmap, listRoadmaps, toggleRoadmapTask } from 
 import { useMemo, useState } from "react";
 import { toast } from "sonner";
 
-export const Route = createFileRoute("/dashboard/roadmap")({
+export const Route = createFileRoute("/_authenticated/dashboard/roadmap")({
   head: () => ({ meta: [{ title: "Learning Roadmap — DevScan AI" }] }),
   component: RoadmapPage,
 });

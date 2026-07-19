@@ -1,4 +1,4 @@
-import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate, useSearch } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Eye, EyeOff, Github, Mail, Check, ArrowRight, Sparkles, TrendingUp, GitBranch, Activity, Loader2, AlertCircle } from "lucide-react";
@@ -7,7 +7,12 @@ import { supabase } from "@/integrations/supabase/client";
 import { lovable } from "@/integrations/lovable";
 import { toast } from "sonner";
 
+type AuthSearch = { redirect?: string };
+
 export const Route = createFileRoute("/auth")({
+  validateSearch: (s: Record<string, unknown>): AuthSearch => ({
+    redirect: typeof s.redirect === "string" ? s.redirect : undefined,
+  }),
   head: () => ({
     meta: [
       { title: "Sign in — DevScan AI" },
@@ -17,7 +22,16 @@ export const Route = createFileRoute("/auth")({
   component: AuthPage,
 });
 
-type Mode = "login" | "signup";
+type Mode = "login" | "signup" | "forgot";
+
+const REDIRECT_KEY = "devscan.postAuthRedirect";
+
+function safeRedirect(target: string | undefined): string {
+  if (!target) return "/dashboard";
+  // Only allow same-origin relative paths.
+  if (target.startsWith("/") && !target.startsWith("//")) return target;
+  return "/dashboard";
+}
 
 function passwordStrength(pw: string) {
   let s = 0;
@@ -32,6 +46,8 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 function AuthPage() {
   const navigate = useNavigate();
+  const search = useSearch({ from: "/auth" }) as AuthSearch;
+  const dest = safeRedirect(search.redirect);
   const [mode, setMode] = useState<Mode>("login");
   const [show, setShow] = useState(false);
   const [email, setEmail] = useState("");
@@ -41,31 +57,54 @@ function AuthPage() {
   const [loading, setLoading] = useState(false);
   const [oauthLoading, setOauthLoading] = useState<"google" | "github" | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [info, setInfo] = useState<string | null>(null);
   const strength = useMemo(() => passwordStrength(pw), [pw]);
 
-  // If already authenticated, send to dashboard
+  // If already authenticated, send to intended dest
   useEffect(() => {
     let active = true;
     supabase.auth.getSession().then(({ data }) => {
-      if (active && data.session) navigate({ to: "/dashboard", replace: true });
+      if (active && data.session) navigate({ to: dest, replace: true });
     });
     const { data: sub } = supabase.auth.onAuthStateChange((_event, session) => {
-      if (session) navigate({ to: "/dashboard", replace: true });
+      if (session) navigate({ to: dest, replace: true });
     });
     return () => {
       active = false;
       sub.subscription.unsubscribe();
     };
-  }, [navigate]);
+  }, [navigate, dest]);
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
+    setInfo(null);
 
     if (!EMAIL_RE.test(email.trim())) {
       setError("Please enter a valid email address.");
       return;
     }
+
+    // FORGOT PASSWORD flow
+    if (mode === "forgot") {
+      setLoading(true);
+      try {
+        const { error: err } = await supabase.auth.resetPasswordForEmail(email.trim(), {
+          redirectTo: `${window.location.origin}/reset-password`,
+        });
+        if (err) throw err;
+        setInfo("If an account exists for that email, a reset link is on its way.");
+        toast.success("Password reset email sent.");
+      } catch (err: unknown) {
+        const msg = err instanceof Error ? err.message : "Could not send reset email.";
+        setError(msg);
+        toast.error(msg);
+      } finally {
+        setLoading(false);
+      }
+      return;
+    }
+
     if (mode === "signup") {
       if (!name.trim()) {
         setError("Please enter your full name.");
@@ -87,13 +126,12 @@ function AuthPage() {
           email: email.trim(),
           password: pw,
           options: {
-            emailRedirectTo: `${window.location.origin}/dashboard`,
+            emailRedirectTo: `${window.location.origin}${dest}`,
             data: { full_name: name.trim() },
           },
         });
         if (err) throw err;
         toast.success("Account created. Welcome to DevScan AI!");
-        // onAuthStateChange will redirect when session arrives
       } else {
         const { error: err } = await supabase.auth.signInWithPassword({
           email: email.trim(),
@@ -104,7 +142,6 @@ function AuthPage() {
       }
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : "Authentication failed.";
-      // Friendlier message for common Supabase errors
       const friendly = /invalid login credentials/i.test(msg)
         ? "Incorrect email or password."
         : /user already registered/i.test(msg)
@@ -123,6 +160,8 @@ function AuthPage() {
     setError(null);
     setOauthLoading("google");
     try {
+      // Remember destination across the OAuth round-trip.
+      try { sessionStorage.setItem(REDIRECT_KEY, dest); } catch { /* ignore */ }
       const result = await lovable.auth.signInWithOAuth("google", {
         redirect_uri: window.location.origin,
         extraParams: { prompt: "select_account" },
@@ -132,7 +171,13 @@ function AuthPage() {
       if (result.redirected) return;
 
       toast.success("Signed in with Google.");
-      navigate({ to: "/dashboard", replace: true });
+      let target = dest;
+      try {
+        const saved = sessionStorage.getItem(REDIRECT_KEY);
+        if (saved) target = safeRedirect(saved);
+        sessionStorage.removeItem(REDIRECT_KEY);
+      } catch { /* ignore */ }
+      navigate({ to: target, replace: true });
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : "Google sign-in failed.";
       setError(msg);
@@ -166,24 +211,26 @@ function AuthPage() {
           <div className="flex flex-1 items-center justify-center py-10">
             <div className="w-full max-w-md">
               {/* Mode toggle */}
-              <div className="mb-8 inline-flex rounded-full bg-[oklch(0.94_0.01_250)] p-1 text-sm font-medium ring-1 ring-[oklch(0.88_0.015_250)]">
-                {(["login", "signup"] as const).map((m) => (
-                  <button
-                    key={m}
-                    onClick={() => setMode(m)}
-                    className={`relative rounded-full px-5 py-1.5 transition-colors ${mode === m ? "text-white" : "text-[oklch(0.45_0.02_260)] hover:text-[oklch(0.25_0.02_260)]"}`}
-                  >
-                    {mode === m && (
-                      <motion.span
-                        layoutId="mode-pill"
-                        className="absolute inset-0 -z-0 rounded-full gradient-blue shadow-md shadow-blue-500/25"
-                        transition={{ type: "spring", stiffness: 400, damping: 30 }}
-                      />
-                    )}
-                    <span className="relative z-10">{m === "login" ? "Sign in" : "Create account"}</span>
-                  </button>
-                ))}
-              </div>
+              {mode !== "forgot" && (
+                <div className="mb-8 inline-flex rounded-full bg-[oklch(0.94_0.01_250)] p-1 text-sm font-medium ring-1 ring-[oklch(0.88_0.015_250)]">
+                  {(["login", "signup"] as const).map((m) => (
+                    <button
+                      key={m}
+                      onClick={() => { setMode(m); setError(null); setInfo(null); }}
+                      className={`relative rounded-full px-5 py-1.5 transition-colors ${mode === m ? "text-white" : "text-[oklch(0.45_0.02_260)] hover:text-[oklch(0.25_0.02_260)]"}`}
+                    >
+                      {mode === m && (
+                        <motion.span
+                          layoutId="mode-pill"
+                          className="absolute inset-0 -z-0 rounded-full gradient-blue shadow-md shadow-blue-500/25"
+                          transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                        />
+                      )}
+                      <span className="relative z-10">{m === "login" ? "Sign in" : "Create account"}</span>
+                    </button>
+                  ))}
+                </div>
+              )}
 
               <AnimatePresence mode="wait">
                 <motion.div
@@ -194,37 +241,43 @@ function AuthPage() {
                   transition={{ duration: 0.25 }}
                 >
                   <h1 className="text-3xl font-semibold tracking-tight sm:text-[2rem]">
-                    {mode === "login" ? "Welcome back." : "Create your account."}
+                    {mode === "login" ? "Welcome back." : mode === "signup" ? "Create your account." : "Reset your password."}
                   </h1>
                   <p className="mt-2 text-sm text-[oklch(0.5_0.02_260)]">
                     {mode === "login"
                       ? "Sign in to your developer intelligence workspace."
-                      : "Free forever for students. No credit card required."}
+                      : mode === "signup"
+                        ? "Free forever for students. No credit card required."
+                        : "Enter your email and we'll send you a secure reset link."}
                   </p>
 
-                  {/* OAuth */}
-                  <div className="mt-7 grid grid-cols-2 gap-3">
-                    <OauthButton
-                      icon={oauthLoading === "google" ? <Loader2 className="size-4 animate-spin" /> : <GoogleIcon />}
-                      label={oauthLoading === "google" ? "Google…" : "Google"}
-                      onClick={signInWithGoogle}
-                      disabled={Boolean(oauthLoading || loading)}
-                    />
-                    <OauthButton
-                      icon={<Github className="size-4" />}
-                      label="GitHub"
-                      onClick={signInWithGithub}
-                      disabled={Boolean(oauthLoading || loading)}
-                    />
-                  </div>
+                  {mode !== "forgot" && (
+                    <>
+                      {/* OAuth */}
+                      <div className="mt-7 grid grid-cols-2 gap-3">
+                        <OauthButton
+                          icon={oauthLoading === "google" ? <Loader2 className="size-4 animate-spin" /> : <GoogleIcon />}
+                          label={oauthLoading === "google" ? "Google…" : "Google"}
+                          onClick={signInWithGoogle}
+                          disabled={Boolean(oauthLoading || loading)}
+                        />
+                        <OauthButton
+                          icon={<Github className="size-4" />}
+                          label="GitHub"
+                          onClick={signInWithGithub}
+                          disabled={Boolean(oauthLoading || loading)}
+                        />
+                      </div>
 
-                  <div className="my-6 flex items-center gap-3 text-xs text-[oklch(0.55_0.02_260)]">
-                    <div className="h-px flex-1 bg-[oklch(0.9_0.015_250)]" />
-                    <span>or continue with email</span>
-                    <div className="h-px flex-1 bg-[oklch(0.9_0.015_250)]" />
-                  </div>
+                      <div className="my-6 flex items-center gap-3 text-xs text-[oklch(0.55_0.02_260)]">
+                        <div className="h-px flex-1 bg-[oklch(0.9_0.015_250)]" />
+                        <span>or continue with email</span>
+                        <div className="h-px flex-1 bg-[oklch(0.9_0.015_250)]" />
+                      </div>
+                    </>
+                  )}
 
-                  <form className="space-y-4" onSubmit={submit}>
+                  <form className={`space-y-4 ${mode === "forgot" ? "mt-7" : ""}`} onSubmit={submit}>
                     {mode === "signup" && (
                       <TextField
                         label="Full name"
@@ -242,36 +295,42 @@ function AuthPage() {
                       placeholder="you@college.edu"
                       icon={<Mail className="size-4 text-[oklch(0.55_0.02_260)]" />}
                     />
-                    <div>
-                      <div className="mb-1.5 flex items-center justify-between">
-                        <label className="text-xs font-medium text-[oklch(0.35_0.02_260)]">Password</label>
-                        {mode === "login" && (
-                          <a href="#" className="text-xs font-medium text-[oklch(0.5_0.18_260)] hover:underline">
-                            Forgot password?
-                          </a>
+                    {mode !== "forgot" && (
+                      <div>
+                        <div className="mb-1.5 flex items-center justify-between">
+                          <label className="text-xs font-medium text-[oklch(0.35_0.02_260)]">Password</label>
+                          {mode === "login" && (
+                            <button
+                              type="button"
+                              onClick={() => { setMode("forgot"); setError(null); setInfo(null); }}
+                              className="text-xs font-medium text-[oklch(0.5_0.18_260)] hover:underline"
+                            >
+                              Forgot password?
+                            </button>
+                          )}
+                        </div>
+                        <div className="relative">
+                          <input
+                            type={show ? "text" : "password"}
+                            value={pw}
+                            onChange={(e) => setPw(e.target.value)}
+                            required
+                            placeholder={mode === "login" ? "••••••••" : "At least 8 characters"}
+                            className="h-11 w-full rounded-xl bg-white px-4 pr-11 text-sm text-[oklch(0.2_0.02_260)] outline-none ring-1 ring-[oklch(0.9_0.015_250)] transition-all placeholder:text-[oklch(0.6_0.02_260)] focus:ring-2 focus:ring-[oklch(0.62_0.18_260/0.45)]"
+                          />
+                          <button
+                            type="button"
+                            onClick={() => setShow(!show)}
+                            className="absolute right-3 top-1/2 -translate-y-1/2 text-[oklch(0.55_0.02_260)] hover:text-[oklch(0.25_0.02_260)]"
+                          >
+                            {show ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
+                          </button>
+                        </div>
+                        {mode === "signup" && pw.length > 0 && (
+                          <PasswordMeter strength={strength} />
                         )}
                       </div>
-                      <div className="relative">
-                        <input
-                          type={show ? "text" : "password"}
-                          value={pw}
-                          onChange={(e) => setPw(e.target.value)}
-                          required
-                          placeholder={mode === "login" ? "••••••••" : "At least 8 characters"}
-                          className="h-11 w-full rounded-xl bg-white px-4 pr-11 text-sm text-[oklch(0.2_0.02_260)] outline-none ring-1 ring-[oklch(0.9_0.015_250)] transition-all placeholder:text-[oklch(0.6_0.02_260)] focus:ring-2 focus:ring-[oklch(0.62_0.18_260/0.45)]"
-                        />
-                        <button
-                          type="button"
-                          onClick={() => setShow(!show)}
-                          className="absolute right-3 top-1/2 -translate-y-1/2 text-[oklch(0.55_0.02_260)] hover:text-[oklch(0.25_0.02_260)]"
-                        >
-                          {show ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
-                        </button>
-                      </div>
-                      {mode === "signup" && pw.length > 0 && (
-                        <PasswordMeter strength={strength} />
-                      )}
-                    </div>
+                    )}
 
                     {mode === "login" && (
                       <label className="flex items-center gap-2 text-xs text-[oklch(0.45_0.02_260)]">
@@ -291,6 +350,12 @@ function AuthPage() {
                         <span>{error}</span>
                       </div>
                     )}
+                    {info && (
+                      <div className="flex items-start gap-2 rounded-lg bg-emerald-50 px-3 py-2 text-xs text-emerald-700 ring-1 ring-emerald-200">
+                        <Check className="mt-0.5 size-3.5 shrink-0" />
+                        <span>{info}</span>
+                      </div>
+                    )}
 
                     <button
                       type="submit"
@@ -300,15 +365,25 @@ function AuthPage() {
                       {loading ? (
                         <>
                           <Loader2 className="size-4 animate-spin" />
-                          {mode === "login" ? "Signing in…" : "Creating account…"}
+                          {mode === "login" ? "Signing in…" : mode === "signup" ? "Creating account…" : "Sending link…"}
                         </>
                       ) : (
                         <>
-                          {mode === "login" ? "Sign in" : "Create account"}
+                          {mode === "login" ? "Sign in" : mode === "signup" ? "Create account" : "Send reset link"}
                           <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
                         </>
                       )}
                     </button>
+
+                    {mode === "forgot" && (
+                      <button
+                        type="button"
+                        onClick={() => { setMode("login"); setError(null); setInfo(null); }}
+                        className="w-full text-center text-xs font-medium text-[oklch(0.5_0.18_260)] hover:underline"
+                      >
+                        ← Back to sign in
+                      </button>
+                    )}
 
                     {mode === "signup" && (
                       <p className="text-center text-[11px] text-[oklch(0.55_0.02_260)]">
@@ -322,15 +397,17 @@ function AuthPage() {
                 </motion.div>
               </AnimatePresence>
 
-              <p className="mt-8 text-center text-sm text-[oklch(0.45_0.02_260)]">
-                {mode === "login" ? "New to DevScan AI?" : "Already have an account?"}{" "}
-                <button
-                  onClick={() => setMode(mode === "login" ? "signup" : "login")}
-                  className="font-semibold text-[oklch(0.5_0.18_260)] hover:underline"
-                >
-                  {mode === "login" ? "Create an account" : "Sign in"}
-                </button>
-              </p>
+              {mode !== "forgot" && (
+                <p className="mt-8 text-center text-sm text-[oklch(0.45_0.02_260)]">
+                  {mode === "login" ? "New to DevScan AI?" : "Already have an account?"}{" "}
+                  <button
+                    onClick={() => { setMode(mode === "login" ? "signup" : "login"); setError(null); setInfo(null); }}
+                    className="font-semibold text-[oklch(0.5_0.18_260)] hover:underline"
+                  >
+                    {mode === "login" ? "Create an account" : "Sign in"}
+                  </button>
+                </p>
+              )}
             </div>
           </div>
 

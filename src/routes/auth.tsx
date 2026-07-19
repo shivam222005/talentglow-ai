@@ -239,37 +239,43 @@ function AuthPage() {
                   transition={{ duration: 0.25 }}
                 >
                   <h1 className="text-3xl font-semibold tracking-tight sm:text-[2rem]">
-                    {mode === "login" ? "Welcome back." : "Create your account."}
+                    {mode === "login" ? "Welcome back." : mode === "signup" ? "Create your account." : "Reset your password."}
                   </h1>
                   <p className="mt-2 text-sm text-[oklch(0.5_0.02_260)]">
                     {mode === "login"
                       ? "Sign in to your developer intelligence workspace."
-                      : "Free forever for students. No credit card required."}
+                      : mode === "signup"
+                        ? "Free forever for students. No credit card required."
+                        : "Enter your email and we'll send you a secure reset link."}
                   </p>
 
-                  {/* OAuth */}
-                  <div className="mt-7 grid grid-cols-2 gap-3">
-                    <OauthButton
-                      icon={oauthLoading === "google" ? <Loader2 className="size-4 animate-spin" /> : <GoogleIcon />}
-                      label={oauthLoading === "google" ? "Google…" : "Google"}
-                      onClick={signInWithGoogle}
-                      disabled={Boolean(oauthLoading || loading)}
-                    />
-                    <OauthButton
-                      icon={<Github className="size-4" />}
-                      label="GitHub"
-                      onClick={signInWithGithub}
-                      disabled={Boolean(oauthLoading || loading)}
-                    />
-                  </div>
+                  {mode !== "forgot" && (
+                    <>
+                      {/* OAuth */}
+                      <div className="mt-7 grid grid-cols-2 gap-3">
+                        <OauthButton
+                          icon={oauthLoading === "google" ? <Loader2 className="size-4 animate-spin" /> : <GoogleIcon />}
+                          label={oauthLoading === "google" ? "Google…" : "Google"}
+                          onClick={signInWithGoogle}
+                          disabled={Boolean(oauthLoading || loading)}
+                        />
+                        <OauthButton
+                          icon={<Github className="size-4" />}
+                          label="GitHub"
+                          onClick={signInWithGithub}
+                          disabled={Boolean(oauthLoading || loading)}
+                        />
+                      </div>
 
-                  <div className="my-6 flex items-center gap-3 text-xs text-[oklch(0.55_0.02_260)]">
-                    <div className="h-px flex-1 bg-[oklch(0.9_0.015_250)]" />
-                    <span>or continue with email</span>
-                    <div className="h-px flex-1 bg-[oklch(0.9_0.015_250)]" />
-                  </div>
+                      <div className="my-6 flex items-center gap-3 text-xs text-[oklch(0.55_0.02_260)]">
+                        <div className="h-px flex-1 bg-[oklch(0.9_0.015_250)]" />
+                        <span>or continue with email</span>
+                        <div className="h-px flex-1 bg-[oklch(0.9_0.015_250)]" />
+                      </div>
+                    </>
+                  )}
 
-                  <form className="space-y-4" onSubmit={submit}>
+                  <form className={`space-y-4 ${mode === "forgot" ? "mt-7" : ""}`} onSubmit={submit}>
                     {mode === "signup" && (
                       <TextField
                         label="Full name"
@@ -287,36 +293,42 @@ function AuthPage() {
                       placeholder="you@college.edu"
                       icon={<Mail className="size-4 text-[oklch(0.55_0.02_260)]" />}
                     />
-                    <div>
-                      <div className="mb-1.5 flex items-center justify-between">
-                        <label className="text-xs font-medium text-[oklch(0.35_0.02_260)]">Password</label>
-                        {mode === "login" && (
-                          <a href="#" className="text-xs font-medium text-[oklch(0.5_0.18_260)] hover:underline">
-                            Forgot password?
-                          </a>
+                    {mode !== "forgot" && (
+                      <div>
+                        <div className="mb-1.5 flex items-center justify-between">
+                          <label className="text-xs font-medium text-[oklch(0.35_0.02_260)]">Password</label>
+                          {mode === "login" && (
+                            <button
+                              type="button"
+                              onClick={() => { setMode("forgot"); setError(null); setInfo(null); }}
+                              className="text-xs font-medium text-[oklch(0.5_0.18_260)] hover:underline"
+                            >
+                              Forgot password?
+                            </button>
+                          )}
+                        </div>
+                        <div className="relative">
+                          <input
+                            type={show ? "text" : "password"}
+                            value={pw}
+                            onChange={(e) => setPw(e.target.value)}
+                            required
+                            placeholder={mode === "login" ? "••••••••" : "At least 8 characters"}
+                            className="h-11 w-full rounded-xl bg-white px-4 pr-11 text-sm text-[oklch(0.2_0.02_260)] outline-none ring-1 ring-[oklch(0.9_0.015_250)] transition-all placeholder:text-[oklch(0.6_0.02_260)] focus:ring-2 focus:ring-[oklch(0.62_0.18_260/0.45)]"
+                          />
+                          <button
+                            type="button"
+                            onClick={() => setShow(!show)}
+                            className="absolute right-3 top-1/2 -translate-y-1/2 text-[oklch(0.55_0.02_260)] hover:text-[oklch(0.25_0.02_260)]"
+                          >
+                            {show ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
+                          </button>
+                        </div>
+                        {mode === "signup" && pw.length > 0 && (
+                          <PasswordMeter strength={strength} />
                         )}
                       </div>
-                      <div className="relative">
-                        <input
-                          type={show ? "text" : "password"}
-                          value={pw}
-                          onChange={(e) => setPw(e.target.value)}
-                          required
-                          placeholder={mode === "login" ? "••••••••" : "At least 8 characters"}
-                          className="h-11 w-full rounded-xl bg-white px-4 pr-11 text-sm text-[oklch(0.2_0.02_260)] outline-none ring-1 ring-[oklch(0.9_0.015_250)] transition-all placeholder:text-[oklch(0.6_0.02_260)] focus:ring-2 focus:ring-[oklch(0.62_0.18_260/0.45)]"
-                        />
-                        <button
-                          type="button"
-                          onClick={() => setShow(!show)}
-                          className="absolute right-3 top-1/2 -translate-y-1/2 text-[oklch(0.55_0.02_260)] hover:text-[oklch(0.25_0.02_260)]"
-                        >
-                          {show ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
-                        </button>
-                      </div>
-                      {mode === "signup" && pw.length > 0 && (
-                        <PasswordMeter strength={strength} />
-                      )}
-                    </div>
+                    )}
 
                     {mode === "login" && (
                       <label className="flex items-center gap-2 text-xs text-[oklch(0.45_0.02_260)]">
@@ -336,6 +348,12 @@ function AuthPage() {
                         <span>{error}</span>
                       </div>
                     )}
+                    {info && (
+                      <div className="flex items-start gap-2 rounded-lg bg-emerald-50 px-3 py-2 text-xs text-emerald-700 ring-1 ring-emerald-200">
+                        <Check className="mt-0.5 size-3.5 shrink-0" />
+                        <span>{info}</span>
+                      </div>
+                    )}
 
                     <button
                       type="submit"
@@ -345,15 +363,25 @@ function AuthPage() {
                       {loading ? (
                         <>
                           <Loader2 className="size-4 animate-spin" />
-                          {mode === "login" ? "Signing in…" : "Creating account…"}
+                          {mode === "login" ? "Signing in…" : mode === "signup" ? "Creating account…" : "Sending link…"}
                         </>
                       ) : (
                         <>
-                          {mode === "login" ? "Sign in" : "Create account"}
+                          {mode === "login" ? "Sign in" : mode === "signup" ? "Create account" : "Send reset link"}
                           <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
                         </>
                       )}
                     </button>
+
+                    {mode === "forgot" && (
+                      <button
+                        type="button"
+                        onClick={() => { setMode("login"); setError(null); setInfo(null); }}
+                        className="w-full text-center text-xs font-medium text-[oklch(0.5_0.18_260)] hover:underline"
+                      >
+                        ← Back to sign in
+                      </button>
+                    )}
 
                     {mode === "signup" && (
                       <p className="text-center text-[11px] text-[oklch(0.55_0.02_260)]">
@@ -367,15 +395,17 @@ function AuthPage() {
                 </motion.div>
               </AnimatePresence>
 
-              <p className="mt-8 text-center text-sm text-[oklch(0.45_0.02_260)]">
-                {mode === "login" ? "New to DevScan AI?" : "Already have an account?"}{" "}
-                <button
-                  onClick={() => setMode(mode === "login" ? "signup" : "login")}
-                  className="font-semibold text-[oklch(0.5_0.18_260)] hover:underline"
-                >
-                  {mode === "login" ? "Create an account" : "Sign in"}
-                </button>
-              </p>
+              {mode !== "forgot" && (
+                <p className="mt-8 text-center text-sm text-[oklch(0.45_0.02_260)]">
+                  {mode === "login" ? "New to DevScan AI?" : "Already have an account?"}{" "}
+                  <button
+                    onClick={() => { setMode(mode === "login" ? "signup" : "login"); setError(null); setInfo(null); }}
+                    className="font-semibold text-[oklch(0.5_0.18_260)] hover:underline"
+                  >
+                    {mode === "login" ? "Create an account" : "Sign in"}
+                  </button>
+                </p>
+              )}
             </div>
           </div>
 

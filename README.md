@@ -1,4 +1,4 @@
-# DevScan AI — Developer Portfolio Intelligence
+DevScan AI — Developer Portfolio Intelligence
 
 AI-powered resume, GitHub, and project analysis for students, developers, and recruiters.
 
@@ -73,7 +73,6 @@ src/
 ## Getting Started
 
 ### Prerequisites
-
 - [Bun](https://bun.sh/) (or Node.js 20+)
 - A Supabase project (for auth and database)
 
